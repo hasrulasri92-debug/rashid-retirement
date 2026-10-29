@@ -1,1415 +1,604 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ms">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>RASHID // FINAL EPISODE // Anime Retirement Protocol</title>
-<style>
-:root{
-  --bg:#ffffff;
-  --ink:#050505;
-  --soft:#f6f6f3;
-  --muted:#666;
-  --grid:rgba(0,0,0,.055);
-  --dot:rgba(0,0,0,.12);
-  --shadow:0 16px 42px rgba(0,0,0,.10);
-}
-*{box-sizing:border-box}
-html,body{
-  width:100%;height:100%;margin:0;overflow:hidden;
-  background:#fff;color:var(--ink);
-  font-family:Arial,Helvetica,sans-serif;
-}
-body{
-  touch-action:none;
-  user-select:none;-webkit-user-select:none;
-  -webkit-touch-callout:none;
-  -webkit-tap-highlight-color:transparent;
-}
-button{font:inherit}
-.screen{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  opacity:0;pointer-events:none;
-  transition:opacity .45s ease;
-  background:
-    linear-gradient(var(--grid) 1px,transparent 1px),
-    linear-gradient(90deg,var(--grid) 1px,transparent 1px),
-    #fff;
-  background-size:34px 34px;
-}
-.screen.active{opacity:1;pointer-events:auto}
-.screen::after{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:
-    linear-gradient(90deg,transparent 49.93%,rgba(0,0,0,.035) 50%,transparent 50.07%),
-    linear-gradient(transparent 49.93%,rgba(0,0,0,.035) 50%,transparent 50.07%);
-}
-.topbar,.bottombar{
-  position:absolute;left:3.5vw;right:3.5vw;z-index:30;
-  display:flex;justify-content:space-between;gap:16px;
-  font:700 10px/1.25 Consolas,"Courier New",monospace;
-  letter-spacing:.20em;text-transform:uppercase;color:#333;
-}
-.topbar{top:3.2vh;padding-bottom:10px;border-bottom:1px solid #111}
-.bottombar{bottom:3.2vh;padding-top:10px;border-top:1px solid #111}
-.corner-note{
-  position:absolute;z-index:4;
-  font:700 9px/1.3 Consolas,"Courier New",monospace;
-  letter-spacing:.14em;text-transform:uppercase;color:#777;
-}
-.cn1{left:3.5vw;top:10.2vh}
-.cn2{right:3.5vw;bottom:10.2vh;text-align:right}
-.flash{
-  position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;z-index:1000;
-}
-.flash.go{animation:blackFlash .38s ease-out}
-@keyframes blackFlash{0%{opacity:.82}100%{opacity:0}}
-.glitch{animation:glitch .45s steps(2) 1}
-@keyframes glitch{
-  20%{transform:translate(4px,-2px)}
-  40%{transform:translate(-5px,2px)}
-  60%{transform:translate(3px,1px)}
-  80%{transform:translate(-2px,-1px)}
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#301727">
+  <title>Jejak Rashid | Tuan Dos — DOS THE FINAL ARC</title>
+  <style>
+    :root { --ink:#0c0c16; --night:#151521; --panel:#222333; --paper:#fff8e8; --cream:#fff3d8; --gold:#ffd56b; --red:#ff4b57; --red2:#d92348; --cyan:#83f1ed; --muted:#b2b2bf; --border:rgba(255,255,255,.20); --ease:cubic-bezier(.22,1,.36,1); }
+    * {box-sizing:border-box}
+    html,body {width:100%;height:100%;margin:0}
+    body {font-family:Arial,"Segoe UI",sans-serif;color:var(--cream);background:var(--ink);overflow:hidden}
+    button {font:inherit;cursor:pointer}
+    button:focus-visible {outline:3px solid var(--cyan);outline-offset:4px}
+    .app {position:relative;width:100%;height:100vh;height:100dvh;overflow:hidden;isolation:isolate;background:radial-gradient(circle at 74% 42%,#4f243d 0,#171827 40%,#0b0c17 72%)}
+    .app::before {content:"";position:absolute;inset:-30%;z-index:-3;background:repeating-conic-gradient(from 16deg at 68% 49%,rgba(255,200,127,.11) 0deg 2deg,transparent 2.3deg 9deg);animation:slowspin 95s linear infinite;pointer-events:none}
+    .app::after {content:"";position:absolute;inset:0;z-index:12;pointer-events:none;opacity:.2;background-image:radial-gradient(#fff 0.5px,transparent 0.8px);background-size:5px 5px;mix-blend-mode:soft-light}
+    .sun {position:absolute;z-index:-2;right:-13vw;top:-27vh;width:min(100vw,1100px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 49% 49%,#ffc87a 0 18%,#fa7658 39%,#f9425e 65%,transparent 68%);opacity:.7;filter:blur(1px);animation:breathe 7s ease-in-out infinite}
+    .sun::after {content:"";position:absolute;inset:8%;border-radius:50%;border:2px solid rgba(255,250,214,.3);box-shadow:0 0 0 28px rgba(255,255,255,.04),0 0 0 82px rgba(255,255,255,.02)}
+    .slash {position:absolute;z-index:-1;left:-15%;top:66%;width:140%;height:24%;background:var(--red2);transform:skewY(-12deg);opacity:.25}
+    .slashes {position:absolute;z-index:-1;inset:0;background:repeating-linear-gradient(150deg,transparent 0 52px,rgba(255,255,255,.03) 53px 56px,transparent 58px 95px);animation:glide 12s linear infinite;pointer-events:none}
+    .topbar {position:absolute;left:0;right:0;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px clamp(20px,4vw,66px);border-bottom:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg,rgba(7,8,18,.65),rgba(7,8,18,.05))}
+    .brand {display:flex;align-items:center;gap:12px;min-width:0}
+    .crest-wrap {width:42px;height:42px;display:grid;place-items:center;flex:none;background:#fff;border-radius:4px;padding:3px;box-shadow:0 2px 0 var(--gold)}
+    .crest {max-width:100%;max-height:100%;object-fit:contain}
+    .brandtext {text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:900;line-height:1.5}
+    .brandtext small {display:block;font-weight:600;font-size:9px;letter-spacing:.23em;color:var(--muted)}
+    .header-right {display:flex;align-items:center;gap:13px;white-space:nowrap}
+    .epcode {font-size:10px;font-weight:900;letter-spacing:.2em;color:var(--gold)}
+    .sound {border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.23);color:#fff;padding:9px 11px;font-size:10px;font-weight:900;letter-spacing:.08em}
+    .scene {position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;padding:90px clamp(20px,6vw,90px) 62px;overflow-y:auto;opacity:0;visibility:hidden;transform:translateY(16px) scale(1.025);transition:opacity .52s var(--ease),transform .52s var(--ease),visibility .52s;pointer-events:none}
+    .scene.active {opacity:1;visibility:visible;transform:none;pointer-events:auto}
+    .scene-body {width:min(1230px,100%);margin:auto}
+    .intro-grid {display:grid;grid-template-columns:minmax(0,1.2fr) minmax(240px,.8fr);gap:35px;align-items:center}
+    .kicker {display:inline-flex;align-items:center;gap:9px;text-transform:uppercase;color:var(--gold);font-weight:900;letter-spacing:.19em;font-size:clamp(10px,1vw,13px)}
+    .kicker::before {content:"";display:block;width:28px;height:3px;background:var(--red)}
+    .intro h1 {font-family:Impact,"Arial Black",sans-serif;line-height:.8;margin:24px 0 15px;letter-spacing:.035em;font-weight:900;text-transform:uppercase;text-shadow:9px 10px 0 rgba(0,0,0,.26)}
+    .intro .name {display:block;font-size:clamp(105px,15vw,232px);color:var(--paper);transform:skewX(-7deg);width:max-content;max-width:100%}
+    .intro .name::first-letter {color:var(--gold)}
+    .intro .arc {display:block;font-size:clamp(51px,7.2vw,116px);color:var(--red);white-space:nowrap;transform:skewX(-8deg)}
+    .subtitle {font-size:clamp(14px,1.65vw,22px);letter-spacing:.08em;font-weight:900;line-height:1.5;max-width:640px;text-transform:uppercase}
+    .subline {font-size:13px;line-height:1.7;color:#d3d0d8;max-width:570px;margin:12px 0 30px}
+    .primary,.secondary {display:inline-flex;justify-content:center;align-items:center;gap:15px;min-height:59px;padding:15px 26px;border:0;font-size:14px;letter-spacing:.12em;font-weight:900;text-transform:uppercase;transition:transform .17s,filter .17s,background .17s}
+    .primary {background:var(--gold);color:#15111c;box-shadow:7px 7px 0 var(--red2);clip-path:polygon(0 0,95% 0,100% 20%,100% 100%,5% 100%,0 80%)}
+    .primary:hover,.secondary:hover {transform:translateY(-3px);filter:brightness(1.08)}
+    .primary:active,.secondary:active {transform:translateY(1px)}
+    .secondary {background:rgba(10,10,20,.4);color:#fff;border:1px solid rgba(255,255,255,.45)}
+    .btn-arrow {font-size:21px;line-height:1}
+    .hero-medallion {position:relative;aspect-ratio:1;max-width:440px;width:100%;justify-self:center;display:grid;place-items:center;transform:rotate(8deg)}
+    .med-circle {position:absolute;inset:5%;border:15px solid #11111a;background:repeating-radial-gradient(circle at center,#d32e4e 0px 20px,#e04255 20px 40px);border-radius:50%;box-shadow:18px 18px 0 rgba(0,0,0,.45),0 0 0 4px var(--gold);overflow:hidden}
+    .med-circle::after {content:"";position:absolute;inset:-40%;background:repeating-linear-gradient(-30deg,transparent 0 20px,rgba(0,0,0,.12) 21px 26px);transform:rotate(-15deg)}
+    .med-kanji {z-index:1;font-weight:900;font-size:clamp(130px,20vw,260px);line-height:1;color:#fff0ca;text-shadow:10px 11px 0 #181723;transform:rotate(-8deg)}
+    .med-stamp {position:absolute;right:0;bottom:7%;z-index:2;background:var(--gold);color:#111;padding:13px 21px;border:5px solid #111;font:900 clamp(15px,2vw,25px) Impact,sans-serif;letter-spacing:.1em;transform:rotate(-10deg)}
+    .micro {font-size:11px;letter-spacing:.17em;font-weight:800;text-transform:uppercase;color:#ceccda}
+    .bottomline {position:absolute;z-index:18;bottom:18px;left:clamp(20px,4vw,66px);right:clamp(20px,4vw,66px);display:flex;align-items:center;justify-content:space-between;gap:10px;color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.14em;font-weight:800;text-transform:uppercase;pointer-events:none}
+    .chapter {font-size:clamp(13px,1.8vw,19px);font-weight:900;text-transform:uppercase;letter-spacing:.2em;color:var(--gold);margin-bottom:13px}
+    .panel-heading {font-family:Impact,"Arial Black",sans-serif;font-size:clamp(45px,6vw,85px);line-height:.95;letter-spacing:.035em;margin:0 0 15px;text-transform:uppercase;text-shadow:5px 5px 0 rgba(0,0,0,.4)}
+    .panel-copy {max-width:680px;color:#d6d1dc;line-height:1.6;font-size:clamp(13px,1.4vw,17px);margin:0 0 25px}
+    .sign-scene .scene-body {max-width:1020px}
+    .paper-frame {background:#0b0b14;border:2px solid var(--gold);box-shadow:13px 13px 0 #e63e55;padding:8px;position:relative}
+    .paper-top {display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--paper);color:#0e0d1a;padding:13px 20px;border-bottom:3px solid #20202a;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:900}
+    .paper {height:clamp(210px,33vh,340px);background:linear-gradient(transparent 98%,rgba(0,0,0,.07) 98%) 0 0/100% 46px,var(--paper);position:relative}
+    .paper::before {content:"TANDATANGAN DI SINI";position:absolute;top:15px;left:20px;font-size:10px;letter-spacing:.18em;font-weight:900;color:rgba(15,15,20,.27);pointer-events:none}
+    #signatureCanvas {display:block;width:100%;height:100%;cursor:crosshair;touch-action:none}
+    .paper-bottom {background:var(--paper);border-top:2px solid #222;color:#222;display:flex;justify-content:space-between;gap:15px;padding:10px 20px;font-size:10px;text-transform:uppercase;letter-spacing:.1em;font-weight:900}
+    .sign-actions {display:flex;align-items:center;gap:15px;flex-wrap:wrap;margin-top:24px}
+    .hint {color:#ffd88b;font-size:12px;min-height:18px;letter-spacing:.03em}
+    .verify-scene .scene-body {max-width:1040px}
+    .verify-grid {display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1.2fr);gap:30px;align-items:stretch;margin-top:25px}
+    .sig-preview {position:relative;background:var(--paper);min-height:245px;border:5px solid #131322;box-shadow:10px 10px 0 var(--red);overflow:hidden;padding:14px;color:#111}
+    .sig-preview::before {content:"HALAMAN TERAKHIR / TANDATANGAN";position:absolute;top:13px;left:15px;font-size:11px;letter-spacing:.15em;font-weight:900;z-index:2}
+    .sig-preview img {width:100%;height:220px;object-fit:contain;filter:contrast(1.15)}
+    .scanbeam {position:absolute;left:0;right:0;top:0;height:6px;background:var(--red);box-shadow:0 0 25px 15px rgba(255,75,87,.22);animation:scan 2.1s ease-in-out infinite alternate;z-index:3}
+    .verify-board {border:1px solid rgba(255,255,255,.35);padding:24px;background:rgba(8,9,20,.7);box-shadow:inset 0 0 0 4px rgba(255,255,255,.035)}
+    .verify-label {display:flex;justify-content:space-between;gap:14px;letter-spacing:.13em;font-size:11px;font-weight:900;color:var(--gold);text-transform:uppercase}
+    .progress {height:17px;background:#292935;overflow:hidden;margin:14px 0 21px;border:2px solid rgba(255,255,255,.35)}
+    .progress-fill {height:100%;width:0%;background:repeating-linear-gradient(90deg,var(--red) 0 13px,var(--gold) 13px 17px);transition:width .06s linear}
+    .verify-line {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 2px;border-bottom:1px dashed rgba(255,255,255,.17);font-size:clamp(11px,1.3vw,14px);letter-spacing:.05em;font-weight:800;color:#9596ab}
+    .verify-line.done {color:#fff}
+    .verify-line .value {color:#73758a;letter-spacing:.09em;font-size:11px}
+    .verify-line.done .value {color:var(--cyan)}
+    .verify-line.done .value::before {content:"✓ ";font-size:15px}
+    .verify-success {color:var(--gold);font:900 clamp(18px,3vw,30px) Impact,sans-serif;letter-spacing:.07em;min-height:34px;margin-top:17px}
+    .decision-scene .scene-body {max-width:1080px;text-align:center}
+    .verified-pill {display:inline-flex;align-items:center;gap:9px;background:rgba(131,241,237,.12);border:1px solid var(--cyan);padding:10px 16px;color:var(--cyan);font-size:12px;font-weight:900;letter-spacing:.13em;margin-bottom:25px}
+    .question {font-family:Impact,"Arial Black",sans-serif;font-size:clamp(50px,8vw,115px);text-shadow:7px 7px 0 #0a0a11;line-height:.96;text-transform:uppercase;margin:5px 0 17px}
+    .question em {font-style:normal;color:var(--gold)}
+    .choices {display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:30px auto 0;max-width:860px}
+    .choice {min-height:155px;position:relative;text-align:left;border:3px solid #fff;padding:22px 24px;background:#252434;transform:skewX(-4deg);color:white;transition:transform .2s,background .2s,box-shadow .2s}
+    .choice:hover {transform:skewX(-4deg) translateY(-6px);box-shadow:10px 10px 0 #0b0b12}
+    .choice.yes {background:#f1b94f;color:#0c0c15;border-color:#0c0c15}
+    .choice.no {background:#252535;color:#fff;border-color:#eee}
+    .choice .small {font-size:10px;letter-spacing:.2em;font-weight:900;display:block;margin-bottom:10px}
+    .choice strong {font-size:clamp(22px,3.2vw,37px);line-height:1.1;font-family:Impact,"Arial Black",sans-serif;letter-spacing:.02em;display:block}
+    .choice .arr {position:absolute;right:22px;bottom:16px;font-size:27px;font-weight:900}
+    .twist {margin:25px auto 0;padding:17px;background:rgba(255,75,87,.20);border:1px solid var(--red);max-width:700px;display:none;line-height:1.55}
+    .twist.show {display:block;animation:pop .4s var(--ease)}
+    .twist strong {display:block;color:var(--gold);font-size:19px;letter-spacing:.08em;margin-bottom:4px}
+    .twist button {background:transparent;border:0;color:#fff;text-decoration:underline;text-underline-offset:5px;margin-top:9px;font-weight:900;padding:6px}
+    .launch-scene .scene-body {text-align:center;max-width:930px}
+    .launch-plate {border:3px solid var(--gold);background:rgba(10,10,18,.8);box-shadow:15px 15px 0 var(--red);padding:clamp(25px,5vw,60px)}
+    .launch-count {font-family:Impact,"Arial Black",sans-serif;line-height:1;color:var(--gold);font-size:clamp(135px,23vw,300px);text-shadow:10px 10px 0 var(--red2);animation:countpop .8s var(--ease) infinite alternate}
+    .launch-progress {height:10px;margin:23px auto;background:#2d2c37;width:100%;max-width:530px;overflow:hidden}
+    .launch-progress div {height:100%;width:0;background:var(--gold);transition:width .22s linear}
+    .launch-status {font-size:clamp(13px,2vw,21px);font-weight:900;letter-spacing:.15em;color:var(--cyan);min-height:28px}
+    .floating-deco {position:absolute;z-index:-1;pointer-events:none;inset:0;overflow:hidden}
+    .fragment {position:absolute;width:12px;height:28px;background:rgba(255,215,122,.55);clip-path:polygon(30% 0,100% 20%,85% 100%,0 80%);animation:fall linear infinite}
+    .fragment:nth-child(1) {left:10%;top:-10%;animation-duration:15s;animation-delay:-4s}
+    .fragment:nth-child(2) {left:33%;top:-10%;animation-duration:19s;animation-delay:-8s;background:rgba(255,75,87,.5)}
+    .fragment:nth-child(3) {left:74%;top:-10%;animation-duration:17s;animation-delay:-12s}
+    .fragment:nth-child(4) {left:89%;top:-10%;animation-duration:23s;animation-delay:-3s;background:rgba(255,255,255,.4)}
+    .fragment:nth-child(5) {left:54%;top:-10%;animation-duration:26s;animation-delay:-14s;background:rgba(255,75,87,.7)}
+    @keyframes slowspin {to{transform:rotate(360deg)}}
+    @keyframes breathe {50%{transform:scale(1.07);opacity:.84}}
+    @keyframes glide {to{background-position:200px 0}}
+    @keyframes scan {from{top:0}to{top:100%}}
+    @keyframes pop {from{opacity:0;transform:translateY(20px) scale(.95)}to{opacity:1;transform:none}}
+    @keyframes countpop {from{transform:scale(.97)}to{transform:scale(1.04)}}
+    @keyframes fall {from{transform:translate(0,-10vh) rotate(0)}to{transform:translate(40px,125vh) rotate(410deg)}}
+    @media(max-width:750px) {
+      .topbar {padding:12px 17px}
+      .brandtext {font-size:9px}.brandtext small {font-size:7px}.crest-wrap {width:34px;height:34px}
+      .epcode {display:none}.sound {padding:8px;font-size:9px}
+      .scene {padding:83px 19px 52px}
+      .intro-grid {grid-template-columns:1fr;gap:10px}
+      .intro h1 {margin:14px 0}.intro .name {font-size:clamp(90px,26vw,170px)}.intro .arc{font-size:clamp(46px,12vw,75px)}
+      .intro .subline {margin:8px 0 20px}
+      .hero-medallion {max-width:190px;justify-self:end;margin-top:-25px;margin-right:10px}
+      .med-kanji {font-size:105px}.med-stamp {font-size:13px;padding:7px 10px;border-width:3px}
+      .panel-heading {font-size:clamp(43px,9vw,68px)}.paper-top {padding:12px;font-size:9px}
+      .paper {height:260px}.paper-bottom {padding:9px;font-size:8px}
+      .verify-grid {grid-template-columns:1fr;gap:12px}.sig-preview {min-height:165px}.sig-preview img {height:160px}.verify-board{padding:17px}
+      .choices {grid-template-columns:1fr;gap:12px}.choice {min-height:105px;padding:14px 18px}
+      .choice strong {font-size:28px}.question {font-size:clamp(52px,12vw,85px)}
+      .bottomline {left:17px;right:17px;font-size:8px}
+      .bottomline span:last-child {display:none}
+    }
+    @media(max-height:670px) and (min-width:751px){.scene{padding-top:70px;padding-bottom:40px}.intro .name{font-size:clamp(100px,12vw,175px)}.intro .arc{font-size:clamp(58px,6vw,92px)}.hero-medallion{max-width:330px}.paper{height:240px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
-/* header logo */
-.brand-badge{
-  position:fixed;left:4vw;top:16px;z-index:80;
-  display:flex;align-items:center;gap:10px;
-  padding:8px 10px;border:1px solid #111;background:rgba(255,255,255,.92);
-  box-shadow:0 10px 22px rgba(0,0,0,.08);
-}
-.brand-badge img{
-  width:52px;height:52px;object-fit:contain;display:block;background:#fff;
-}
-.brand-badge .txt{
-  font:800 8px/1.45 Consolas,"Courier New",monospace;
-  letter-spacing:.14em;text-transform:uppercase;color:#111;
-}
-.brand-badge .txt b{display:block;font-size:10px;letter-spacing:.18em}
+    /* ==========================================================
+       JEJAK RASHID — TEMA MANGA WINE / DUSTY ROSE / VINTAGE PAPER
+       Inspirasi warna: montaj Canva pengguna, bukan gaya neon/cyber.
+       ========================================================== */
+    :root {
+      --ink:#1a0e19;--night:#301727;--panel:#49253c;
+      --paper:#f3e4d4;--cream:#fff0e4;--gold:#eac3b8;
+      --red:#c17293;--red2:#803653;--cyan:#f0b4c6;
+      --muted:#d9b6c3;--border:rgba(255,228,229,.26);
+    }
+    body {background:#1a0e19}
+    .app {background:radial-gradient(circle at 77% 32%,#85435e 0,#4f243c 35%,#291426 68%,#1d0e1b 100%)}
+    .app::before {inset:-30%;background:repeating-conic-gradient(from 35deg at 69% 49%,rgba(255,224,217,.045) 0deg 2deg,transparent 2.2deg 10deg);animation:slowspin 175s linear infinite;z-index:-3}
+    .app::after {opacity:.25;background-image:radial-gradient(rgba(249,218,215,.7) .55px,transparent .9px);background-size:5px 5px}
+    .sun {right:-9vw;top:-28vh;width:min(91vw,1050px);background:radial-gradient(circle,#c78b9d 0 26%,#a66882 48%,#75415e 70%,transparent 71%);opacity:.35;filter:blur(3px);animation:breathe 11s ease-in-out infinite}
+    .slash {background:#aa5879;transform:skewY(-8deg);opacity:.12}
+    .slashes {background:repeating-linear-gradient(150deg,transparent 0 62px,rgba(251,220,213,.035) 63px 65px,transparent 66px 115px)}
+    .topbar {background:linear-gradient(180deg,rgba(26,11,24,.83),rgba(26,11,24,.13));border-color:rgba(255,218,225,.24)}
+    .crest-wrap {background:var(--paper);border:2px solid #eac5bb;box-shadow:4px 4px 0 #6b2e4e}
+    .epcode,.chapter,.kicker {color:#e8bdba}
+    .sound {color:#fff0e4;border-color:rgba(242,204,216,.5);background:rgba(34,13,30,.6);border-radius:3px}
+    .sound:hover {background:#713552}
+    button:focus-visible {outline-color:#f3d2c2}
+    .intro h1 {text-shadow:5px 7px 0 #301425}
+    .intro .name {font-family:Impact,'Arial Black',sans-serif;color:#faeade;letter-spacing:.02em}
+    .intro .name::first-letter {color:#faeade}
+    .intro .arc {font-family:Georgia,'Times New Roman',serif;font-weight:900;font-style:italic;letter-spacing:-.03em;color:#e3a9bb;text-shadow:5px 5px 0 #421c34}
+    .subtitle {color:#f8e8e1}
+    .subline,.panel-copy {color:#e4c5ce}
+    .primary {background:#f0c9bb;color:#291326;box-shadow:7px 7px 0 #a85777}
+    .secondary {background:rgba(31,13,27,.58);border-color:rgba(245,213,222,.52)}
+    .primary:hover {background:#ffe0d3}
+    .kicker::before {background:#d28aa6}
+    .panel-heading {color:#fae9dd;letter-spacing:.01em}
+    .paper-frame {border-color:#eac2b5;background:#33172a;box-shadow:13px 13px 0 #98526e}
+    .paper-top {background:#f3e4d4;color:#4d2940}
+    .paper {background:linear-gradient(transparent 98%,rgba(99,52,73,.11) 98%) 0 0/100% 46px,var(--paper)}
+    .paper-bottom {background:#f3e4d4;color:#4d2940}
+    .sig-preview {background:#f5e8db;box-shadow:10px 10px 0 #ae6683;border-color:#33172a}
+    .scanbeam {background:#bc567e;box-shadow:0 0 24px 12px rgba(180,73,119,.25)}
+    .verify-board {background:rgba(35,13,31,.7);border:2px solid rgba(249,212,222,.36)}
+    .verify-success,.verified-pill {color:#f3d0ba}
+    .decision-scene .scene-body {max-width:1040px}
+    .choice.yes {background:#f2d9cf;color:#331a2d}
+    .choice.no {background:#67324d;color:#fff4e8}
+    .choice {border:2px solid #edc3c5;box-shadow:9px 9px 0 #27111f}
+    .twist {background:rgba(158,68,108,.3);border-color:#ecb3ca}
+    .launch-plate {background:rgba(48,19,37,.86);box-shadow:15px 15px 0 #a85b7d;border-color:#ebc0b9}
+    .launch-progress {background:#63374e}
+    .fragment {background:rgba(231,181,195,.55)}
+    .fragment:nth-child(2),.fragment:nth-child(5) {background:rgba(177,91,126,.67)}
+    .bottomline {color:rgba(245,210,220,.7)}
+    /* Kotak 'buku komik' pada intro — dilukis dalam SVG/CSS, tanpa aset luar. */
+    .storybook {position:relative;width:min(100%,430px);height:clamp(370px,45vw,540px);justify-self:center;perspective:1050px;transform:rotate(2deg)}
+    .storybook-cover {
+      position:relative;height:92%;margin-left:17px;isolation:isolate;overflow:hidden;
+      background:linear-gradient(135deg,#f5e9df 0,#f6ddd1 47%,#c790a0 100%);
+      color:#35172b;border:8px double #402038;
+      box-shadow:-13px 0 0 #2e1527,-21px 4px 0 #8b5267,15px 20px 0 rgba(22,7,20,.45),0 0 0 2px #e3c4ba;
+      transform:rotateY(-6deg);animation:bookHover 7s ease-in-out infinite;
+    }
+    .storybook-cover::before {content:"";position:absolute;inset:8px;border:1px solid rgba(69,30,50,.57);z-index:6;pointer-events:none}
+    .storybook-cover::after {content:"";position:absolute;inset:0;z-index:5;pointer-events:none;background:repeating-radial-gradient(circle at 70% 30%,rgba(65,26,47,.13) 0 1px,transparent 1px 4px);opacity:.15}
+    .book-label {z-index:4;position:relative;width:max-content;max-width:92%;margin:28px auto 0;text-align:center;border:2px solid #543049;border-radius:2px;padding:7px 10px;background:rgba(248,223,207,.93);font:900 clamp(8px,1vw,11px) Georgia,serif;letter-spacing:.06em}
+    .book-head {z-index:4;position:relative;margin:15px auto 0;text-align:center;line-height:.73;font:900 clamp(72px,7vw,96px) Georgia,'Times New Roman',serif;letter-spacing:-.075em;color:#381a2c;text-shadow:2px 2px 0 #c4a19c}
+    .book-head span {font-size:1em}
+    .book-tagline {position:relative;z-index:4;display:table;margin:17px auto 0;padding:5px 9px;background:rgba(249,229,218,.92);text-align:center;font:italic 700 clamp(13px,1.25vw,17px) Georgia,serif;color:#562c43;border:1px solid #b98b95}
+    .book-scenery {position:absolute;z-index:2;inset:auto 0 30px;width:100%;height:49%;filter:drop-shadow(0 -3px 0 rgba(72,26,51,.16))}
+    .book-credit {position:absolute;z-index:6;bottom:11px;left:12%;right:12%;background:#f4e2d5;border:2px solid #442139;box-shadow:3px 3px 0 #81415c;text-align:center;padding:5px 4px 3px;font:900 11px Georgia,serif;letter-spacing:.02em;white-space:nowrap}
+    .book-credit small {display:block;font:700 9px Georgia,serif;letter-spacing:.08em;margin-top:2px}
+    .book-shadow-caption {position:absolute;bottom:-2px;left:20px;right:0;text-align:center;font:900 10px Arial,sans-serif;letter-spacing:.19em;color:#efd2d5}
+    @keyframes bookHover {50%{transform:rotateY(-10deg) translateY(-8px)}}
+    @media(max-width:980px) and (min-width:751px){.storybook{height:clamp(360px,40vw,460px)}.book-head{font-size:clamp(70px,8vw,98px)}.book-label{margin-top:19px}}
+    @media(max-width:750px){
+      .intro-grid{grid-template-columns:1fr}
+      .intro .arc{font-size:clamp(38px,9vw,66px);white-space:normal}
+      .storybook{display:none}
+      .panel-heading{font-size:clamp(42px,9vw,68px)}
+      .header-right{gap:5px}.sound{font-size:8px;padding:8px 6px}
+      .book-head{font-size:74px}
+    }
+    @media(max-height:760px) and (min-width:751px){
+      .storybook{height:clamp(305px,56vh,455px)}
+      .book-head{font-size:clamp(61px,7vw,95px)}
+      .book-label{margin-top:12px}
+      .book-tagline{margin-top:12px}
+    }
 
-/* utility */
-.mono{font-family:Consolas,"Courier New",monospace}
-.kicker{
-  font:800 11px Consolas,"Courier New",monospace;
-  letter-spacing:.34em;text-transform:uppercase;color:#333;
-}
-.title{
-  font-size:clamp(28px,5vw,60px);font-weight:300;letter-spacing:.20em;text-indent:.20em;text-transform:uppercase;
-}
-.subtext{
-  max-width:720px;margin:12px auto 0;
-  font:700 11px/1.7 Consolas,"Courier New",monospace;
-  letter-spacing:.11em;text-transform:uppercase;color:#666;
-}
-.card{
-  position:relative;z-index:5;
-  background:rgba(255,255,255,.9);
-  border:1.5px solid #111;box-shadow:var(--shadow);
-}
-.speed-lines{
-  position:absolute;inset:0;pointer-events:none;opacity:.09;
-  background:
-    repeating-linear-gradient(118deg, transparent 0 18px, #000 18px 19px, transparent 19px 33px);
-  mix-blend-mode:multiply;
-}
-.dot-tone{
-  background:
-    radial-gradient(circle, var(--dot) 18%, transparent 19%) 0 0 / 10px 10px,
-    #fff;
-}
-
-/* boot */
-.boot-wrap{
-  position:relative;z-index:5;
-  width:min(92vw,860px);text-align:center;padding:30px 24px;
-}
-.boot-wrap .manga-frame{
-  position:relative;padding:36px 22px 28px;
-  border:1.5px solid #111;background:rgba(255,255,255,.92);box-shadow:var(--shadow);
-}
-.episode-chip{
-  display:inline-block;padding:8px 12px;border:1px solid #111;background:#fff;
-  font:900 10px Consolas,"Courier New",monospace;letter-spacing:.20em;text-transform:uppercase;
-}
-.fingerprint-wrap{
-  position:relative;width:min(44vw,280px);aspect-ratio:1;margin:32px auto 20px;
-}
-.sensor{
-  position:absolute;inset:0;border-radius:50%;
-  display:grid;place-items:center;background:#fff;border:2px solid #111;cursor:pointer;
-  box-shadow:inset 0 0 0 12px #fff, inset 0 0 0 13px #111, var(--shadow);
-  overflow:hidden;
-}
-.sensor::before,.sensor::after{
-  content:"";position:absolute;border-radius:50%;border:1px solid #111;
-}
-.sensor::before{inset:9%;border-left-color:transparent;border-right-color:transparent;animation:spin 7s linear infinite}
-.sensor::after{inset:22%;border-style:dashed;animation:spin 4.6s linear infinite reverse}
-@keyframes spin{to{transform:rotate(360deg)}}
-.pulse{position:absolute;inset:26%;border:1px solid #111;border-radius:50%;animation:pulse 1.8s ease-out infinite}
-@keyframes pulse{0%{transform:scale(.72);opacity:.6}100%{transform:scale(1.72);opacity:0}}
-.fingerprint{width:42%;color:#000;z-index:3}
-.progress-svg{
-  position:absolute;inset:-5%;width:110%;height:110%;transform:rotate(-90deg);pointer-events:none
-}
-.progress-bg{fill:none;stroke:#ddd;stroke-width:2.6}
-.progress{fill:none;stroke:#000;stroke-width:4;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:100}
-.sensor.holding{animation:sensorPress .5s infinite alternate}
-@keyframes sensorPress{to{transform:scale(.985)}}
-.boot-hold{
-  font:700 11px Consolas,"Courier New",monospace;letter-spacing:.16em;text-transform:uppercase;color:#555;
-}
-.boot-hold strong{display:block;margin-top:6px;font-size:16px;color:#000;letter-spacing:.10em}
-.boot-status{
-  height:18px;margin-top:14px;
-  font:800 10px Consolas,"Courier New",monospace;letter-spacing:.14em;text-transform:uppercase;color:#111
-}
-.story-capsules{
-  margin-top:20px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
-}
-.story-capsules span{
-  padding:7px 10px;border:1px solid #111;background:#fff;
-  font:900 8px Consolas,"Courier New",monospace;letter-spacing:.14em;text-transform:uppercase
-}
-
-/* scan */
-.scan-shell{
-  position:absolute;inset:9vh 4vw 10vh;z-index:5;
-  display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,31vw);gap:18px;
-}
-.camera-stage{
-  position:relative;overflow:hidden;border:1.5px solid #111;background:#f8f8f5;box-shadow:var(--shadow);
-}
-#camera{
-  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1);
-}
-.camera-fallback{
-  position:absolute;inset:0;display:grid;place-items:center;background:#f4f4f1;color:#777;
-  font:800 12px Consolas,"Courier New",monospace;letter-spacing:.18em;text-transform:uppercase
-}
-.camera-grid{
-  position:absolute;inset:0;pointer-events:none;
-  background:
-    linear-gradient(rgba(0,0,0,.10) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,0,0,.10) 1px,transparent 1px);
-  background-size:42px 42px;
-}
-.camera-labels{
-  position:absolute;left:14px;right:14px;top:12px;display:flex;justify-content:space-between;gap:14px;z-index:6;
-  font:800 9px Consolas,"Courier New",monospace;letter-spacing:.15em;text-transform:uppercase;color:#000;
-}
-.camera-labels span{padding:6px 8px;border:1px solid #111;background:rgba(255,255,255,.82)}
-#faceBox{
-  position:absolute;left:50%;top:50%;width:min(43vw,360px);height:min(57vh,460px);
-  transform:translate(-50%,-50%);pointer-events:none;z-index:5;transition:.12s linear;
-}
-.corner{position:absolute;width:38px;height:38px}
-.c1{left:0;top:0;border-left:3px solid #000;border-top:3px solid #000}
-.c2{right:0;top:0;border-right:3px solid #000;border-top:3px solid #000}
-.c3{left:0;bottom:0;border-left:3px solid #000;border-bottom:3px solid #000}
-.c4{right:0;bottom:0;border-right:3px solid #000;border-bottom:3px solid #000}
-.face-oval{
-  position:absolute;left:19%;right:19%;top:8%;bottom:8%;
-  border:1px dashed rgba(0,0,0,.72);
-  border-radius:48% 48% 43% 43% / 42% 42% 58% 58%;
-}
-.crosshair{position:absolute;left:50%;top:50%;width:34px;height:34px;transform:translate(-50%,-50%)}
-.crosshair::before,.crosshair::after{content:"";position:absolute;background:#000}
-.crosshair::before{left:50%;top:0;width:1px;height:100%}
-.crosshair::after{left:0;top:50%;height:1px;width:100%}
-.laser{
-  position:absolute;left:1%;right:1%;top:8%;height:2px;background:#000;animation:scanline 2.8s ease-in-out infinite
-}
-@keyframes scanline{0%,100%{top:8%;opacity:.55}50%{top:91%;opacity:1}}
-.nodes span{
-  position:absolute;width:7px;height:7px;border:1px solid #000;border-radius:50%;background:#fff;
-  animation:node 1s infinite alternate;
-}
-.nodes span:nth-child(1){left:31%;top:31%}
-.nodes span:nth-child(2){left:64%;top:31%}
-.nodes span:nth-child(3){left:49%;top:48%}
-.nodes span:nth-child(4){left:35%;top:66%}
-.nodes span:nth-child(5){left:61%;top:66%}
-.nodes span:nth-child(6){left:49%;top:81%}
-@keyframes node{to{transform:scale(1.7);background:#000}}
-.scan-readout{
-  position:absolute;left:14px;bottom:14px;width:min(610px,76%);z-index:7;
-  padding:12px 14px;border:1px solid #111;border-left:5px solid #000;background:rgba(255,255,255,.9);
-  font:800 10px/1.7 Consolas,"Courier New",monospace;letter-spacing:.08em;text-transform:uppercase;
-}
-.scan-readout .ok{font-weight:900}
-.scan-progress{height:4px;background:#ddd;margin-top:8px;overflow:hidden}
-.scan-progress i{display:block;height:100%;width:0;background:#000}
-.capture-flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:30}
-.capture-flash.go{animation:captureFlash .36s ease-out}
-@keyframes captureFlash{0%{opacity:1}100%{opacity:0}}
-
-.side-panel{
-  position:relative;padding:12px;border:1.5px solid #111;background:#fff;box-shadow:var(--shadow);overflow:hidden;
-}
-.side-panel::before{
-  content:"MEMORY PANELS // STORY VERIFICATION";
-  display:block;padding-bottom:9px;margin-bottom:8px;border-bottom:1px solid #111;
-  font:900 9px Consolas,"Courier New",monospace;letter-spacing:.16em;text-transform:uppercase
-}
-.panel-status{
-  min-height:28px;margin-bottom:9px;
-  font:800 8px/1.5 Consolas,"Courier New",monospace;letter-spacing:.12em;text-transform:uppercase;color:#555;
-}
-.memory-grid{
-  display:grid;grid-template-columns:1fr 1fr;gap:7px;
-}
-.memory-item{
-  position:relative;height:min(12vh,86px);overflow:hidden;border:1px solid #999;background:#eee;
-  opacity:.35;transform:scale(.975);transition:.35s ease;
-}
-.memory-item img{width:100%;height:100%;object-fit:cover;display:block;filter:none}
-.memory-item .tag{
-  position:absolute;left:3px;right:3px;bottom:3px;padding:3px 4px;border:1px solid #111;background:rgba(255,255,255,.88);
-  font:800 7px Consolas,"Courier New",monospace;letter-spacing:.08em;text-transform:uppercase;color:#000;
-}
-.memory-item.active{opacity:1;transform:scale(1);border-color:#000}
-.memory-item.scanning::after{
-  content:"";position:absolute;left:0;right:0;top:0;height:2px;background:#000;animation:panelSweep 1.1s linear infinite;
-}
-@keyframes panelSweep{to{transform:translateY(86px)}}
-.memory-item.matched{opacity:1;border:3px double #000}
-.memory-item.matched::before{
-  content:"VERIFIED";position:absolute;right:5px;top:5px;z-index:3;padding:3px 5px;background:#000;color:#fff;
-  font:900 7px Consolas,"Courier New",monospace;letter-spacing:.12em;
-}
-.memory-item.missing::after{
-  content:"FILE NOT FOUND";position:absolute;inset:0;display:grid;place-items:center;background:#fff;border:1px dashed #000;
-  font:900 7px Consolas,"Courier New",monospace;letter-spacing:.08em;text-align:center;
-}
-.verify-list{
-  margin-top:10px;padding-top:10px;border-top:1px solid #111;display:grid;gap:6px;
-}
-.verify-row{
-  display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;
-  border:1px solid #ddd;background:#fafafa;padding:7px 8px;
-  font:800 7px/1.5 Consolas,"Courier New",monospace;letter-spacing:.09em;text-transform:uppercase
-}
-.verify-badge{
-  min-width:74px;text-align:center;padding:5px 6px;border:1px solid #111;background:#fff;color:#111;
-}
-.verify-row.pending .verify-badge{color:#777;border-color:#bbb}
-.verify-row.verifying .verify-badge{background:#000;color:#fff;animation:statusBlink .9s steps(2) infinite}
-.verify-row.verified .verify-badge{background:#fff;color:#000;border:2px solid #000;font-weight:900}
-@keyframes statusBlink{50%{opacity:.65}}
-
-/* decision */
-.decision-card,.season-card,.final-card,.montage-card{
-  width:min(92vw,960px);padding:clamp(22px,4vw,42px);text-align:center;
-}
-.character-intro{
-  margin:20px auto 26px;display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap;
-}
-.verified-photo{
-  width:140px;height:176px;position:relative;overflow:visible;background:#eee;border:2px solid #000;box-shadow:10px 10px 0 #000;
-}
-.verified-photo img{width:100%;height:100%;object-fit:cover;display:block;transform:scaleX(-1);filter:none}
-.verified-photo::before,.verified-photo::after{
-  content:"";position:absolute;width:18px;height:18px;z-index:4;
-}
-.verified-photo::before{left:-6px;top:-6px;border-left:3px solid #000;border-top:3px solid #000}
-.verified-photo::after{right:-6px;bottom:-6px;border-right:3px solid #000;border-bottom:3px solid #000}
-.photo-meta{
-  position:absolute;left:4px;right:4px;top:4px;z-index:3;display:flex;justify-content:space-between;
-  font:900 7px Consolas,"Courier New",monospace;letter-spacing:.08em;text-transform:uppercase;color:#000;background:rgba(255,255,255,.74);
-}
-.verified-stamp{
-  position:absolute;left:50%;bottom:-15px;transform:translateX(-50%);
-  min-width:104px;padding:5px 10px;border:1px solid #000;background:#000;color:#fff;
-  font:900 9px Consolas,"Courier New",monospace;letter-spacing:.17em;text-transform:uppercase;
-}
-.character-data{
-  min-width:min(500px,78vw);padding:14px 16px;text-align:left;border:1px solid #111;border-left:6px solid #000;background:#fff;
-  font:800 10px/1.95 Consolas,"Courier New",monospace;letter-spacing:.09em;text-transform:uppercase;
-}
-.character-name{
-  margin-top:12px;font-size:clamp(32px,5vw,56px);font-weight:300;letter-spacing:.10em;text-transform:uppercase;
-}
-.character-tagline{
-  max-width:780px;margin:10px auto 0;
-  font-size:clamp(18px,3vw,34px);line-height:1.22;font-weight:300;
-}
-.choice-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:28px}
-.action-btn,.restart{
-  min-width:210px;padding:14px 22px;border:1.5px solid #000;background:#fff;color:#000;cursor:pointer;
-  font:900 10px Consolas,"Courier New",monospace;letter-spacing:.16em;text-transform:uppercase;transition:.16s ease;
-}
-.action-btn:hover,.action-btn:active,.restart:hover,.restart:active{background:#000;color:#fff;transform:translateY(-1px)}
-.action-btn.primary{background:#000;color:#fff}
-.action-btn.primary:hover,.action-btn.primary:active{background:#fff;color:#000}
-
-/* season card */
-.big25{
-  margin:28px auto 5px;font-size:clamp(90px,18vw,190px);line-height:.82;font-weight:200;letter-spacing:-.04em;color:#000;
-}
-.years-label{
-  font:900 10px Consolas,"Courier New",monospace;letter-spacing:.40em;text-transform:uppercase;
-}
-.season-question{
-  margin:28px auto 0;max-width:760px;font-size:clamp(22px,4vw,44px);line-height:1.22;font-weight:300;
-}
-.season-result{
-  min-height:42px;margin-top:22px;font:900 12px/1.6 Consolas,"Courier New",monospace;letter-spacing:.16em;text-transform:uppercase;
-}
-.season-result.declined{
-  display:inline-block;padding:10px 15px;border:1px solid #000;background:#000;color:#fff;animation:decline .42s steps(2);
-}
-@keyframes decline{25%{transform:translateX(6px)}50%{transform:translateX(-7px)}75%{transform:translateX(3px)}}
-
-/* archive story book */
-.archive-stage{
-  position:relative;z-index:5;width:min(95vw,1120px);height:min(82vh,680px);
-  border:1.5px solid #111;background:rgba(255,255,255,.92);box-shadow:var(--shadow);overflow:hidden;
-}
-.archive-title{
-  position:absolute;left:20px;right:20px;top:18px;padding-bottom:12px;border-bottom:1px solid #111;
-  text-align:center;font:900 10px Consolas,"Courier New",monospace;letter-spacing:.26em;text-transform:uppercase;
-}
-.archive-status2{
-  position:absolute;left:15px;right:15px;top:58px;text-align:center;color:#555;
-  font:900 9px Consolas,"Courier New",monospace;letter-spacing:.13em;text-transform:uppercase;
-}
-.packet-area{
-  position:absolute;left:3%;top:16%;width:55%;height:76%;transition:transform 1.3s ease,opacity 1.3s ease;
-}
-.record-packet{
-  position:absolute;width:102px;height:122px;overflow:hidden;background:#eee;border:1.5px solid #000;
-  box-shadow:7px 7px 0 rgba(0,0,0,.12);
-  transition:transform 1.85s cubic-bezier(.25,.75,.2,1),opacity 1.2s ease;
-}
-.record-packet img{width:100%;height:100%;object-fit:cover;display:block;filter:none}
-.record-label{
-  position:absolute;left:3px;right:3px;bottom:3px;padding:3px;border:1px solid #111;background:rgba(255,255,255,.9);
-  font:900 6px Consolas,"Courier New",monospace;letter-spacing:.08em;text-transform:uppercase;color:#000;
-}
-.rp1{left:0;top:0}.rp2{left:122px;top:20px}.rp3{left:244px;top:0}
-.rp4{left:35px;top:150px}.rp5{left:157px;top:168px}.rp6{left:279px;top:150px}
-.rp7{left:96px;top:302px}.rpLive{left:224px;top:302px;border-width:3px}
-.record-packet.fly{transform:translate(510px,30px) scale(.065) rotate(7deg);opacity:.02}
-.story-dossier{
-  position:absolute;left:6px;bottom:0;width:min(470px,48vw);padding:14px 15px;border:1px solid #000;border-left:6px solid #000;background:#fff;
-  font:900 9px/1.8 Consolas,"Courier New",monospace;letter-spacing:.085em;text-transform:uppercase;transition:transform 1.85s cubic-bezier(.25,.75,.2,1),opacity 1.2s ease;
-}
-.story-dossier.fly{transform:translate(510px,-145px) scale(.065);opacity:.02}
-
-.story-folder{
-  position:absolute;right:5%;top:27%;width:350px;height:254px;perspective:700px;transition:transform 1.25s ease;
-}
-.folder-tab{
-  position:absolute;left:22px;top:10px;width:150px;height:48px;border:2px solid #000;border-bottom:none;background:#fff;
-}
-.folder-back{
-  position:absolute;inset:46px 0 0;border:2px solid #000;background:#f3f3f0;box-shadow:12px 12px 0 rgba(0,0,0,.10);
-}
-.folder-front{
-  position:absolute;left:0;right:0;bottom:0;height:166px;z-index:3;transform-origin:bottom;border:2px solid #000;
-  background:
-    radial-gradient(circle, rgba(0,0,0,.10) 18%, transparent 19%) 0 0 / 10px 10px,
-    #fff;
-  transition:transform 1.35s ease;
-}
-.folder-front.closed{transform:rotateX(-21deg)}
-.folder-caption{
-  position:absolute;z-index:5;left:50%;top:92px;transform:translateX(-50%);width:82%;padding:12px;border:1.5px solid #000;background:#fff;text-align:center;
-  font:900 10px/1.8 Consolas,"Courier New",monospace;letter-spacing:.14em;text-transform:uppercase;
-}
-.folder-caption span{display:block}
-.folder-seal{
-  position:absolute;z-index:6;left:50%;top:130px;width:98px;height:98px;display:grid;place-items:center;
-  transform:translateX(-50%) scale(.25);opacity:0;border:3px double #000;border-radius:50%;background:#fff;color:#000;text-align:center;
-  font:900 9px/1.35 Consolas,"Courier New",monospace;letter-spacing:.10em;
-}
-.folder-seal.show{animation:folderSeal .58s cubic-bezier(.2,1.5,.4,1) forwards}
-@keyframes folderSeal{to{opacity:1;transform:translateX(-50%) scale(1) rotate(-7deg)}}
-.archive-stage.focus-folder .packet-area{transform:scale(.86) translateX(-4%);opacity:.55}
-.archive-stage.focus-folder .story-folder{transform:scale(1.25)}
-.archive-stage.focus-folder::after{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(circle at 78% 48%, rgba(255,255,255,0) 0 18%, rgba(255,255,255,.55) 40%, rgba(255,255,255,.82) 100%);
-}
-
-/* final */
-.final-card{padding-top:54px;padding-bottom:54px}
-.final-small{
-  margin-top:18px;
-  font:900 10px/1.7 Consolas,"Courier New",monospace;letter-spacing:.12em;text-transform:uppercase;color:#444;
-}
-.final-name{
-  margin:16px 0 4px;font-size:clamp(58px,11vw,128px);font-weight:250;letter-spacing:.14em;text-indent:.14em;
-}
-.final-title{
-  font-size:clamp(28px,5vw,58px);font-weight:700;letter-spacing:.11em;text-transform:uppercase;
-}
-.final-rule{width:min(620px,78vw);height:1px;background:#000;margin:23px auto}
-.final-sub{
-  margin:0 auto;max-width:800px;font:800 10px/1.85 Consolas,"Courier New",monospace;letter-spacing:.13em;text-transform:uppercase;color:#444;
-}
-
-/* montage */
-.montage-title{
-  margin-top:12px;font-size:clamp(28px,4.4vw,56px);font-weight:300;letter-spacing:.08em;text-transform:uppercase;
-}
-.montage-sub{
-  margin:14px auto 22px;max-width:780px;
-  font:800 10px/1.8 Consolas,"Courier New",monospace;letter-spacing:.13em;text-transform:uppercase;color:#555;
-}
-.montage-bar{
-  width:min(760px,84vw);height:18px;border:1.5px solid #111;background:#fff;padding:3px;margin:24px auto 10px;
-}
-.montage-bar i{display:block;height:100%;width:0;background:#000}
-.montage-lines{
-  display:grid;gap:8px;max-width:760px;margin:18px auto 0;text-align:left;
-}
-.m-line{
-  display:grid;grid-template-columns:1fr auto;gap:10px;
-  border:1px solid #ddd;background:#fafafa;padding:8px 10px;
-  font:800 8px/1.5 Consolas,"Courier New",monospace;letter-spacing:.1em;text-transform:uppercase;
-}
-.m-line span:last-child{min-width:90px;text-align:center;border:1px solid #111;padding:4px 6px}
-.m-line.pending span:last-child{border-color:#bbb;color:#666}
-.m-line.loading span:last-child{background:#000;color:#fff;animation:statusBlink .9s steps(2) infinite}
-.m-line.ready span:last-child{border:2px solid #000;color:#000;background:#fff}
-.montage-final{
-  min-height:26px;margin-top:18px;font:900 11px/1.6 Consolas,"Courier New",monospace;letter-spacing:.18em;text-transform:uppercase;
-}
-.restart{margin-top:30px}
-
-/* responsive */
-@media(max-width:820px){
-  .scan-shell{grid-template-columns:minmax(0,1fr) 35vw;gap:10px;inset:10vh 2vw 10vh}
-  .camera-labels{font-size:7px}
-  .scan-readout{font-size:8px;width:74%}
-  .memory-item{height:72px}
-  .verify-row{font-size:6px;padding:6px}
-}
-@media(max-width:700px){
-  .brand-badge{left:50%;top:10px;transform:translateX(-50%);padding:6px 8px;gap:8px}
-  .brand-badge img{width:42px;height:42px}
-  .brand-badge .txt{font-size:6px}
-  .brand-badge .txt b{font-size:8px}
-  .topbar,.bottombar{left:4vw;right:4vw;font-size:8px}
-  .title{letter-spacing:.16em;text-indent:.16em}
-  .fingerprint-wrap{width:min(60vw,250px)}
-  .decision-card,.season-card,.final-card,.montage-card{width:94vw;padding:22px 15px}
-  .character-data{min-width:76vw;font-size:8px}
-  .archive-stage{width:97vw;height:83vh}
-  .packet-area{left:2%;top:16%;width:52%}
-  .record-packet{width:64px;height:80px}
-  .rp2{left:76px;top:14px}.rp3{left:152px;top:0}
-  .rp4{left:23px;top:98px}.rp5{left:99px;top:112px}.rp6{left:175px;top:98px}
-  .rp7{left:58px;top:198px}.rpLive{left:134px;top:198px}
-  .record-packet.fly{transform:translate(250px,15px) scale(.055);opacity:.02}
-  .story-dossier{width:48vw;font-size:7px}
-  .story-dossier.fly{transform:translate(250px,-112px) scale(.055);opacity:.02}
-  .story-folder{right:1%;top:30%;width:45vw;height:190px}
-  .folder-front{height:125px}
-  .folder-caption{top:76px;font-size:7px}
-  .folder-seal{top:100px;width:72px;height:72px;font-size:7px}
-  .archive-stage.focus-folder .story-folder{transform:scale(1.12)}
-}
-</style>
+    /* PENUTUP GIMIK: LOADING VIDEO MONTAJ (TIADA VIDEO AUTOPLAY) */
+    .montage-loading-scene {
+      z-index:8;overflow:hidden;text-align:center;
+      background:radial-gradient(ellipse at 50% 40%,#69334e 0%,#381b31 47%,#190d19 100%);
+      padding:85px 35px 53px;
+    }
+    .montage-loading-scene::before {content:"";position:absolute;inset:0;pointer-events:none;opacity:.24;
+      background:repeating-radial-gradient(circle at 50% 45%,transparent 0 65px,rgba(241,195,201,.14) 67px 69px,transparent 71px 128px)}
+    .montage-loading-scene::after {content:"";position:absolute;inset:0;pointer-events:none;opacity:.2;
+      background:repeating-linear-gradient(125deg,transparent 0 85px,rgba(255,222,219,.15) 87px 89px,transparent 90px 168px)}
+    .loading-rays {position:absolute;inset:-50%;pointer-events:none;opacity:.09;
+      background:repeating-conic-gradient(from 0deg at 50% 50%,#ffd5c6 0deg 1deg,transparent 1.5deg 11deg);animation:slowspin 80s linear infinite}
+    .loading-layout {position:relative;z-index:1;max-width:940px;width:100%;margin:auto}
+    .loading-topline {display:flex;justify-content:space-between;gap:18px;text-align:left;
+      font-weight:800;font-size:10px;letter-spacing:.23em;color:#d8a9b9;border-bottom:1px solid rgba(249,212,219,.35);padding-bottom:14px}
+    .loading-illustration {position:relative;width:250px;height:185px;margin:28px auto 14px;display:grid;place-items:center}
+    .loading-circle {position:absolute;border:1px solid #bc7e96;border-radius:50%;inset:4px 35px;transform:rotate(-20deg);
+      box-shadow:0 0 0 15px rgba(225,161,183,.05),0 0 0 32px rgba(225,161,183,.025);animation:loadingOrbit 7s linear infinite}
+    .loading-circle span {position:absolute;top:-15px;left:49%;color:#ffe0d6;font-size:22px}
+    .loading-book {position:relative;width:112px;height:144px;transform:rotate(-9deg);filter:drop-shadow(10px 12px 0 rgba(17,5,15,.55))}
+    .loading-book-spine {position:absolute;left:-10px;top:7px;bottom:0;width:14px;background:#b97c92;border:3px solid #2d1428;z-index:2}
+    .loading-book-cover {position:absolute;inset:0;background:linear-gradient(155deg,#eecdbf,#d6a0b0 72%,#b76c8a);border:4px double #3a1b30;
+      display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:3;color:#47243b}
+    .loading-book-cover::before {content:"";position:absolute;inset:8px;border:1px solid #854f65;pointer-events:none}
+    .loading-book-cover span {font:900 55px Georgia,serif;letter-spacing:-.1em}
+    .loading-book-cover small {font:900 8px Georgia,serif;letter-spacing:.13em;line-height:1.3}
+    .loading-book-page {position:absolute;inset:4px 0 2px 7px;background:#f7e8d7;border:2px solid #845169;transform-origin:left;z-index:4;opacity:0}
+    .loading-book-page.one {animation:flipPage 3.3s ease-in-out infinite}
+    .loading-book-page.two {animation:flipPage 3.3s ease-in-out 1.65s infinite}
+    .loading-corner {position:absolute;width:34px;height:34px;border-color:#dda3b4;border-style:solid;opacity:.8}
+    .loading-corner.tl {left:0;top:0;border-width:3px 0 0 3px}.loading-corner.br {right:0;bottom:0;border-width:0 3px 3px 0}
+    .loading-kicker {font-size:clamp(10px,1.25vw,13px);font-weight:900;letter-spacing:.3em;color:#efbdc6;margin:7px auto 15px}
+    .loading-title {font-family:Impact,"Arial Black",sans-serif;font-size:clamp(60px,9vw,126px);letter-spacing:.02em;line-height:.9;
+      margin:0 auto 18px;color:#f9e7db;text-shadow:7px 8px 0 #56243e}
+    .loading-title em {font-family:Georgia,"Times New Roman",serif;font-style:italic;color:#e3a9bf;letter-spacing:-.04em}
+    .loading-dots {display:inline-block;width:.52em;overflow:hidden;vertical-align:baseline;animation:loadingDots 1.55s steps(4,end) infinite;letter-spacing:0}
+    .loading-strap {font-size:clamp(10px,1.3vw,13px);letter-spacing:.17em;font-weight:700;color:#edcbd0;line-height:1.5}
+    .loading-meter {position:relative;margin:26px auto 11px;width:min(700px,100%);height:22px;padding:3px;overflow:hidden;
+      background:#271322;border:1px solid #e0b2c0;box-shadow:5px 5px 0 #271322}
+    .loading-fill {position:relative;width:0%;height:100%;background:repeating-linear-gradient(-55deg,#e8b1bd 0 11px,#f7d5c9 11px 22px);transition:width .1s linear}
+    .loading-readout {display:flex;justify-content:space-between;align-items:center;gap:16px;text-align:left;width:min(700px,100%);margin:auto}
+    .loading-message {font-weight:900;letter-spacing:.15em;color:#f0c6cf;font-size:clamp(10px,1.2vw,13px);line-height:1.5}
+    .loading-percent {font:900 27px Impact,"Arial Black",sans-serif;letter-spacing:.04em;color:#f8e5d7;font-variant-numeric:tabular-nums}
+    .loading-finish {font-weight:900;letter-spacing:.17em;font-size:clamp(12px,1.7vw,18px);color:#fbe5cf;
+      opacity:0;transform:translateY(7px);transition:opacity .8s,transform .8s;margin-top:13px;min-height:22px}
+    .loading-finish.visible {opacity:1;transform:none}
+    .loading-footerline {margin:28px auto 0;font:800 10px Arial,sans-serif;letter-spacing:.25em;color:#c992a9}
+    .loading-footerline span {padding:0 9px;color:#e8bbc2}
+    .montage-loading-scene.ready .loading-book-page {animation-play-state:paused;opacity:0}
+    .montage-loading-scene.ready .loading-dots {display:none}
+    @keyframes flipPage {0%,10%{opacity:0;transform:perspective(370px) rotateY(0)}18%{opacity:.95}52%{opacity:1;transform:perspective(370px) rotateY(-170deg)}65%,100%{opacity:0;transform:perspective(370px) rotateY(-180deg)}}
+    @keyframes loadingOrbit {to{transform:rotate(340deg)}}
+    @keyframes loadingDots {0%{width:0}100%{width:.52em}}
+    @media(max-width:750px){.montage-loading-scene{padding:82px 20px 50px}.loading-illustration{width:180px;height:130px;margin:14px auto 14px;transform:scale(.73)}
+      .loading-title{font-size:clamp(53px,12vw,90px)}.loading-topline{font-size:8px;letter-spacing:.12em}.loading-meter{margin-top:22px}.loading-footerline{letter-spacing:.12em}}
+    @media(max-height:740px) and (min-width:751px){.loading-illustration{transform:scale(.78);height:132px;margin:5px auto 3px}.loading-title{font-size:clamp(60px,7vw,100px)}.loading-footerline{margin-top:15px}}
+    @media(prefers-reduced-motion:reduce){.loading-dots,.loading-book-page,.loading-circle,.loading-rays{animation:none!important}}
+  </style>
 </head>
 <body>
-<div class="brand-badge">
-  <img id="maktabLogo" src="./logo%20maktab%20png.png" alt="Royal Military College logo">
-  <div class="txt"><b>MTD / RMC</b>Royal Military College<br>Final Episode Protocol</div>
+<div class="app" id="app">
+  <div class="sun" aria-hidden="true"></div><div class="slash" aria-hidden="true"></div><div class="slashes" aria-hidden="true"></div>
+  <div class="floating-deco" aria-hidden="true"><div class="fragment"></div><div class="fragment"></div><div class="fragment"></div><div class="fragment"></div><div class="fragment"></div></div>
+  <header class="topbar">
+    <div class="brand">
+      <span class="crest-wrap" id="crestWrap"><img class="crest" id="crest" alt="Logo Maktab" src="logo maktab png.png"></span>
+      <div class="brandtext">MAKTAB TENTERA DIRAJA<small>JEJAK RASHID // BAB TERAKHIR</small></div>
+    </div>
+    <div class="header-right"><span class="epcode">BAB TERAKHIR · 2026</span><button class="sound" id="fullscreenBtn" type="button" title="Papar sepenuh skrin">⛶ SKRIN PENUH</button><button class="sound" id="soundToggle" type="button" aria-pressed="true">BUNYI: AKTIF</button></div>
+  </header>
+  <main>
+    <section class="scene intro active" id="scene-intro" aria-label="Pengenalan">
+      <div class="scene-body intro-grid">
+        <div>
+          <div class="kicker">Jejak Rashid · Bab Terakhir</div>
+          <h1><span class="name" id="nameIntro">DOS</span><span class="arc">THE FINAL ARC</span></h1>
+          <div class="subtitle">Satu tandatangan. Satu keputusan. Sebuah legasi.</div>
+          <div class="subline">Sebuah cerita yang ditulis oleh masa. Hari ini, Tuan Dos menandatangani halaman terakhir sebelum helaian kenangan dibuka.</div>
+          <button id="beginBtn" class="primary" type="button">MULAKAN BAB TERAKHIR <span class="btn-arrow">➜</span></button>
+          <p class="micro" style="margin-top:26px">EPISOD MANGA 01 / TANDATANGAN TERAKHIR</p>
+        </div>
+        <div class="storybook" aria-label="Kulit buku ilustrasi Jejak Rashid">
+          <div class="storybook-cover">
+            <div class="book-label">SEBUAH PERJALANAN PERKHIDMATAN</div>
+            <div class="book-head">JEJAK<br><span>RASHID</span></div>
+            <div class="book-tagline">Setiap Langkah, Sebuah Legasi</div>
+            <svg class="book-scenery" viewBox="0 0 480 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+              <path fill="#c697a4" d="M0 90L59 42L95 73L142 17L202 87L265 32L313 80L381 25L480 100V260H0Z" />
+              <path fill="#9b5b77" d="M0 129L77 63L139 122L204 50L266 115L331 74L412 136L480 92V260H0Z" />
+              <path fill="#6f3454" d="M0 164L66 109L109 149L175 103L239 155L310 91L370 160L437 119L480 166V260H0Z" />
+              <g fill="#452139">
+                <path d="M18 218l23-85 23 85zm17-40h12v82H35z M70 236l23-105 23 105zm18-58h11v82H88z M143 219l25-88 25 88zm19-54h11v95h-11z M301 216l25-95 25 95zm19-53h11v97h-11z M389 226l27-105 27 105zm21-54h12v88h-12z M449 236l23-110 23 110z" />
+              </g>
+              <path d="M242 280C175 226 297 227 236 194C193 173 237 147 242 132" fill="none" stroke="#ead0c5" stroke-width="23" stroke-linecap="round"/>
+              <path d="M242 280C175 226 297 227 236 194C193 173 237 147 242 132" fill="none" stroke="#fff1dc" stroke-width="5" stroke-dasharray="4 13" stroke-linecap="round"/>
+            </svg>
+            <div class="book-credit"><span id="coverName">RASHID BIN JAMALUDDIN</span><small>MAKTAB TENTERA DIRAJA</small></div>
+          </div>
+          <div class="book-shadow-caption">CERITA TIDAK PERNAH BERAKHIR / 2026</div>
+        </div>
+      </div>
+    </section>
+    <section class="scene sign-scene" id="scene-sign" aria-label="Tandatangan">
+      <div class="scene-body">
+        <div class="chapter">Bab 01 — Tandatangan Terakhir</div>
+        <h2 class="panel-heading">TUAN DOS, SILA<br>TANDATANGAN.</h2>
+        <p class="panel-copy">Setiap perjalanan hebat meninggalkan jejak. Tandatangan Tuan adalah simbolik penutup bab perkhidmatan dan pembuka lembaran baharu.</p>
+        <div class="paper-frame">
+          <div class="paper-top"><span>BAB TERAKHIR // HALAMAN TANDATANGAN 001</span><span>✦ JEJAK RASHID ✦</span></div>
+          <div class="paper"><canvas id="signatureCanvas" aria-label="Ruang melukis tandatangan Tuan Dos"></canvas></div>
+          <div class="paper-bottom"><span>INDIVIDU DIBENARKAN: <span id="nameDoc">TUAN DOS</span></span><span>JEJAK RASHID / 2026</span></div>
+        </div>
+        <div class="sign-actions"><button class="secondary" id="clearBtn" type="button">PADAM / ULANG</button><button class="primary" id="verifyBtn" type="button">SAHKAN TANDATANGAN <span class="btn-arrow">➜</span></button><span class="hint" id="signHint" role="status"></span></div>
+      </div>
+    </section>
+    <section class="scene verify-scene" id="scene-verify" aria-label="Pengesahan simbolik tandatangan">
+      <div class="scene-body">
+        <div class="chapter">Bab 02 — Pengesahan</div>
+        <h2 class="panel-heading">MENGESAHKAN<br>LEGENDA...</h2>
+        <p class="panel-copy">Mengimbas tandatangan dan mengesahkan identiti watak utama. Sila perhatikan protokol pengesahan.</p>
+        <div class="verify-grid">
+          <div class="sig-preview"><div class="scanbeam"></div><img id="signaturePreview" alt="Tandatangan yang dilukis"></div>
+          <div class="verify-board">
+            <div class="verify-label"><span>PENGESAHAN TANDATANGAN // SIMULASI</span><span id="percent">00%</span></div>
+            <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+            <div class="verify-line" id="check1"><span>Corak tandatangan dikesan</span><span class="value">MENUNGGU</span></div>
+            <div class="verify-line" id="check2"><span>Rekod perkhidmatan ditemui</span><span class="value">MENUNGGU</span></div>
+            <div class="verify-line" id="check3"><span>Identiti: Tuan Dos</span><span class="value">MENUNGGU</span></div>
+            <div class="verify-line" id="check4"><span>Bab manga terakhir dibuka</span><span class="value">MENUNGGU</span></div>
+            <div class="verify-success" id="verifySuccess" role="status"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="scene decision-scene" id="scene-decision" aria-label="Keputusan persaraan">
+      <div class="scene-body">
+        <div class="verified-pill">✓ IDENTITY DISAHKAN // TUAN DOS</div>
+        <div class="chapter">Bab 03 — Keputusan Terakhir</div>
+        <h2 class="question">BERSARA <em>ATAU</em><br>TERUS BERJUANG?</h2>
+        <p class="panel-copy" style="margin-left:auto;margin-right:auto">Tuan Dos, pilihan di tangan Tuan. Adakah Tuan bersedia membuka bab baharu?</p>
+        <div class="choices">
+          <button type="button" class="choice yes" id="yesBtn"><span class="small">PILIHAN 01 // PERMULAAN BAHARU</span><strong>YA, SAYA BERSARA</strong><span class="arr">➜</span></button>
+          <button type="button" class="choice no" id="noBtn"><span class="small">PILIHAN 02 // KEJUTAN CERITA</span><strong>TIDAK, BELUM LAGI!</strong><span class="arr">↗</span></button>
+        </div>
+        <div class="twist" id="twist" role="status"><strong>⚡ PLOT TWIST!</strong>Watak utama masih mahu menyambung misi! Tetapi bab terakhir masih menunggu keputusan Tuan...<div><button type="button" id="retryBtn">← KEMBALI KE PILIHAN</button></div></div>
+      </div>
+    </section>
+    <section class="scene launch-scene" id="scene-launch" aria-label="Memulakan montaj">
+      <div class="scene-body">
+        <div class="launch-plate">
+          <div class="chapter">Bab Terakhir Dibuka</div>
+          <h2 class="panel-heading" style="font-size:clamp(39px,5.9vw,78px)">MISI<br>SELESAI!</h2>
+          <div class="launch-status" id="launchStatus">HALAMAN TERAKHIR TELAH DIMETERAI</div>
+          <div class="launch-count" id="launchCount">3</div>
+          <div class="launch-progress"><div id="launchFill"></div></div>
+          <div class="micro">MEMBUKA BUKU KENANGAN // MEMULAKAN MONTAJ</div>
+        </div>
+      </div>
+    </section>
+    <section class="scene montage-loading-scene" id="scene-loading" aria-label="Penutup: animasi loading video montaj">
+      <div class="loading-rays" aria-hidden="true"></div>
+      <div class="scene-body loading-layout">
+        <div class="loading-topline"><span>JEJAK RASHID / DOS THE FINAL ARC</span><span>BINGKAI TERAKHIR · 2026</span></div>
+        <div class="loading-illustration" aria-hidden="true">
+          <div class="loading-book">
+            <div class="loading-book-spine"></div>
+            <div class="loading-book-cover"><span>JR</span><small>BUKU<br>KENANGAN</small></div>
+            <div class="loading-book-page one"></div><div class="loading-book-page two"></div>
+          </div>
+          <div class="loading-circle"><span>✦</span></div>
+          <div class="loading-corner tl"></div><div class="loading-corner br"></div>
+        </div>
+        <div class="loading-kicker" id="loadingKicker">ARKIB KENANGAN SEDANG DIBUKA</div>
+        <h2 class="loading-title" id="loadingTitle">MEMUATKAN VIDEO<br><em>MONTAJ</em><span class="loading-dots" aria-hidden="true">...</span></h2>
+        <div class="loading-strap">SEBUAH PERJALANAN PERKHIDMATAN · SETIAP LANGKAH, SEBUAH LEGASI</div>
+        <div class="loading-meter" role="progressbar" id="loadingMeter" aria-label="Kemajuan animasi loading montaj" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="loading-fill" id="loadingFill"></div></div>
+        <div class="loading-readout"><span class="loading-message" id="loadingMessage" role="status" aria-live="polite">MENYUSUN HELAIAN KENANGAN...</span><span class="loading-percent" id="loadingPercent">00%</span></div>
+        <div class="loading-finish" id="loadingFinish" aria-live="polite">GIMIK TAMAT · SILA MULAKAN VIDEO MONTAJ</div>
+        <div class="loading-footerline">BAB DITUTUP <span>✦</span> LEGASI DITERUSKAN</div>
+      </div>
+    </section>
+  </main>
+  <footer class="bottomline"><span>MAKTAB TENTERA DIRAJA · JEJAK RASHID</span><span>SETIAP LANGKAH, SEBUAH LEGASI // 2026</span></footer>
 </div>
-
-<div id="globalFlash" class="flash"></div>
-
-<section id="boot" class="screen active">
-  <div class="topbar"><span>RMC // FINAL EPISODE</span><span>PROTOCOL 08-RASHID</span></div>
-  <div class="corner-note cn1">ANIME TRIBUTE // BIOMETRIC STORY GATE</div>
-  <div class="corner-note cn2">MODE: CHARACTER DATA INITIALIZATION</div>
-
-  <div class="boot-wrap">
-    <div class="manga-frame card">
-      <div class="speed-lines"></div>
-      <div class="episode-chip">Final Episode</div>
-      <div class="kicker" style="margin-top:18px">Character Activation</div>
-      <div class="title" style="margin-top:12px">Rashid</div>
-      <div class="subtext">One final scan before the end of this chapter. Press and hold to initialize the story archive.</div>
-
-      <div class="fingerprint-wrap">
-        <div id="sensor" class="sensor" role="button" aria-label="Hold biometric sensor">
-          <div class="pulse"></div>
-          <svg class="progress-svg" viewBox="0 0 100 100">
-            <circle class="progress-bg" cx="50" cy="50" r="45" pathLength="100"></circle>
-            <circle id="progressRing" class="progress" cx="50" cy="50" r="45" pathLength="100"></circle>
-          </svg>
-          <svg class="fingerprint" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
-            <path d="M50 12c-18 0-33 14-33 32"/>
-            <path d="M83 45c0-18-15-33-33-33"/>
-            <path d="M25 45c0-14 11-25 25-25s25 11 25 25"/>
-            <path d="M33 45c0-10 8-18 17-18 10 0 18 8 18 18 0 20-7 34-13 43"/>
-            <path d="M41 45c0-5 4-9 9-9s9 4 9 9c0 16-4 28-8 36"/>
-            <path d="M50 45c0 17-6 29-11 37"/>
-            <path d="M29 56c1 12-2 22-7 30"/>
-            <path d="M21 54c2 14-2 25-7 33"/>
-            <path d="M76 54c-1 14-5 25-11 34"/>
-          </svg>
-        </div>
-      </div>
-
-      <div class="boot-hold">Place finger on sensor<strong>PRESS & HOLD</strong></div>
-      <div id="bootStatus" class="boot-status">SYSTEM STANDBY</div>
-
-      <div class="story-capsules">
-        <span>Memory Record Detected</span>
-        <span>Character Data Loading</span>
-        <span>Final Arc Pending</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="bottombar"><span>ENCRYPTION: ACTIVE</span><span>ID: CLASSIFIED</span></div>
-</section>
-
-<section id="scan" class="screen">
-  <div class="topbar"><span>RMC // CHARACTER RECOGNITION</span><span id="timecode">00:00:00</span></div>
-
-  <div class="scan-shell">
-    <div class="camera-stage">
-      <div id="cameraFallback" class="camera-fallback">CAMERA INITIALIZING</div>
-      <video id="camera" autoplay muted playsinline></video>
-      <div class="camera-grid"></div>
-
-      <div class="camera-labels">
-        <span>LIVE CHARACTER FEED</span>
-        <span id="detectorState">FACE TRACK: INIT</span>
-      </div>
-
-      <div id="faceBox">
-        <div class="corner c1"></div><div class="corner c2"></div>
-        <div class="corner c3"></div><div class="corner c4"></div>
-        <div class="face-oval"></div>
-        <div class="crosshair"></div>
-        <div class="laser"></div>
-        <div class="nodes">
-          <span></span><span></span><span></span><span></span><span></span><span></span>
-        </div>
-      </div>
-
-      <div class="scan-readout">
-        <div id="scanLine1">INITIALIZING FACIAL MAPPING...</div>
-        <div id="scanLine2">GEOMETRIC VECTOR: PENDING</div>
-        <div id="scanLine3">IDENTITY MATRIX: PENDING</div>
-        <div id="scanLine4">CHARACTER ROLE MATRIX: PENDING</div>
-        <div id="scanLine5">FINAL ARC PROFILE: PENDING</div>
-        <div class="scan-progress"><i id="scanBar"></i></div>
-      </div>
-      <div id="captureFlash" class="capture-flash"></div>
-    </div>
-
-    <div class="side-panel card">
-      <div id="memoryStatus" class="panel-status">WAITING FOR STORY VERIFICATION...</div>
-
-      <div class="memory-grid">
-        <div class="memory-item" data-base="rashid 1"><img alt="RASHID memory 1"><div class="tag">Memory 01</div></div>
-        <div class="memory-item" data-base="rashid 2"><img alt="RASHID memory 2"><div class="tag">Memory 02</div></div>
-        <div class="memory-item" data-base="rashid 3"><img alt="RASHID memory 3"><div class="tag">Memory 03</div></div>
-        <div class="memory-item" data-base="rashid 4"><img alt="RASHID memory 4"><div class="tag">Memory 04</div></div>
-        <div class="memory-item" data-base="rashid 5"><img alt="RASHID memory 5"><div class="tag">Memory 05</div></div>
-        <div class="memory-item" data-base="rashid 6"><img alt="RASHID memory 6"><div class="tag">Memory 06</div></div>
-        <div class="memory-item" data-base="rashid 7" style="grid-column:1 / span 2;"><img alt="RASHID memory 7"><div class="tag">Primary Story Record</div></div>
-      </div>
-
-      <div class="verify-list">
-        <div class="verify-row pending" id="vr1">
-          <span>Code Name // Rashid</span><span class="verify-badge">Pending</span>
-        </div>
-        <div class="verify-row pending" id="vr2">
-          <span>Role // Guru Bahasa Melayu</span><span class="verify-badge">Pending</span>
-        </div>
-        <div class="verify-row pending" id="vr3">
-          <span>Role // Ketua Jabatan Sukan & Kokurikulum</span><span class="verify-badge">Pending</span>
-        </div>
-        <div class="verify-row pending" id="vr4">
-          <span>Arc // Final Chapter</span><span class="verify-badge">Pending</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="bottombar"><span>MEMORY PANELS // ACTIVE</span><span>SECURE CHANNEL 04</span></div>
-</section>
-
-<section id="decision" class="screen">
-  <div class="topbar"><span>RMC // CHARACTER INTRO</span><span>IDENTITY CONFIRMED</span></div>
-
-  <div class="decision-card card dot-tone">
-    <div class="kicker">Character Card Unlocked</div>
-    <div class="character-name">Rashid</div>
-
-    <div class="character-intro">
-      <div class="verified-photo">
-        <div class="photo-meta"><span>FACIAL ID</span><span>RASHID</span></div>
-        <img id="verifiedImage" alt="Verified live identity image">
-        <div class="verified-stamp">VERIFIED</div>
-      </div>
-      <div class="character-data">
-        CODE NAME: <b>RASHID</b><br>
-        ROLE: <b>GURU BAHASA MELAYU</b><br>
-        ROLE: <b>KETUA JABATAN SUKAN & KOKURIKULUM</b><br>
-        STATUS: <b>SENIOR CHARACTER</b><br>
-        ARC: <b>FINAL CHAPTER</b><br>
-        STORY RECORD: <b>VERIFIED</b>
-      </div>
-    </div>
-
-    <div class="character-tagline">Rashid... is this the end of your story?</div>
-
-    <div class="choice-row">
-      <button id="retireBtn" class="action-btn primary">YES // RETIRE</button>
-      <button id="notRetireBtn" class="action-btn">NO // ONE MORE SEASON</button>
-    </div>
-  </div>
-
-  <div class="bottombar"><span>CHARACTER STATUS: ACTIVE</span><span>AWAITING FINAL CHOICE</span></div>
-</section>
-
-<section id="season" class="screen">
-  <div class="topbar"><span>RMC // SEASON RENEWAL</span><span>MANUAL CONFIRMATION REQUIRED</span></div>
-
-  <div class="season-card card">
-    <div class="kicker">Renewal Attempt Detected</div>
-    <div class="big25">25</div>
-    <div class="years-label">Additional Years</div>
-    <div class="season-question">Rashid, are you prepared to continue for one more season... for another 25 years?</div>
-    <div class="choice-row">
-      <button id="yes25Btn" class="action-btn primary">YES // I AM READY</button>
-      <button id="backBtn" class="action-btn">← BACK TO FINAL QUESTION</button>
-    </div>
-    <div id="seasonResult" class="season-result" aria-live="polite"></div>
-  </div>
-
-  <div class="bottombar"><span>SEASON RENEWAL</span><span>PRODUCTION COMMITTEE PENDING</span></div>
-</section>
-
-<section id="archive" class="screen">
-  <div id="archiveStage" class="archive-stage">
-    <div class="archive-title">Rashid // Complete Story Archive</div>
-    <div id="archiveStatus2" class="archive-status2">PREPARING FINAL STORY PANELS...</div>
-
-    <div class="packet-area">
-      <div class="record-packet rp1"><img data-copy="0" alt=""><div class="record-label">Memory 01</div></div>
-      <div class="record-packet rp2"><img data-copy="1" alt=""><div class="record-label">Memory 02</div></div>
-      <div class="record-packet rp3"><img data-copy="2" alt=""><div class="record-label">Memory 03</div></div>
-      <div class="record-packet rp4"><img data-copy="3" alt=""><div class="record-label">Memory 04</div></div>
-      <div class="record-packet rp5"><img data-copy="4" alt=""><div class="record-label">Memory 05</div></div>
-      <div class="record-packet rp6"><img data-copy="5" alt=""><div class="record-label">Memory 06</div></div>
-      <div class="record-packet rp7"><img data-copy="6" alt=""><div class="record-label">Memory 07</div></div>
-      <div class="record-packet rpLive"><img id="archiveLivePhoto" alt=""><div class="record-label">Live Character ID</div></div>
-
-      <div id="storyDossier" class="story-dossier">
-        CODE NAME: <b>RASHID</b><br>
-        STORY STATUS: <b>VERIFIED</b><br>
-        MEMORY PANELS: <b>7 RECORDS MATCHED</b><br>
-        CHARACTER ROLE: <b>GURU BAHASA MELAYU</b><br>
-        CHARACTER ROLE: <b>KETUA JABATAN SUKAN & KOKURIKULUM</b><br>
-        FINAL ARC STATUS: <b>COMPLETE</b><br>
-        ARCHIVE ORDER: <b>APPROVED</b>
-      </div>
-    </div>
-
-    <div class="story-folder">
-      <div class="folder-tab"></div>
-      <div class="folder-back"></div>
-      <div id="folderFront" class="folder-front"></div>
-      <div class="folder-caption">RASHID // COMPLETE STORY<span>ARCHIVED WITH HONOUR</span></div>
-      <div id="folderSeal" class="folder-seal">FINAL<br>CHAPTER<br>SEALED</div>
-    </div>
-  </div>
-</section>
-
-<section id="final" class="screen">
-  <div class="topbar"><span>FINAL EPISODE COMPLETE</span><span>NEW STORY AWAITS</span></div>
-
-  <div id="finalCard" class="final-card card">
-    <div class="kicker">そして、新しい物語へ</div>
-    <div class="final-small">And now, a new story begins.</div>
-    <div class="final-name">Rashid</div>
-    <div class="final-title">Happy Retirement</div>
-    <div class="final-rule"></div>
-    <div class="final-sub">
-      Your story has been verified, preserved and officially archived.<br>
-      Thank you for your service, dedication and legacy.
-    </div>
-    <button id="restartBtn" class="restart">RESET PROTOCOL</button>
-  </div>
-
-  <div class="bottombar"><span>RETIREMENT STATUS: CONFIRMED</span><span>WITH HONOUR // FINAL EPISODE</span></div>
-</section>
-
-<section id="montage" class="screen">
-  <div class="topbar"><span>ENDING SEQUENCE</span><span>LOADING FAREWELL MONTAGE</span></div>
-
-  <div class="montage-card card">
-    <div class="kicker">Transition Sequence</div>
-    <div class="montage-title">Loading Ending Sequence</div>
-    <div class="montage-sub">Preparing the farewell montage, service highlights, memories and final tribute visuals.</div>
-
-    <div class="montage-bar"><i id="montageBarFill"></i></div>
-
-    <div class="montage-lines">
-      <div class="m-line pending" id="ml1"><span>Memories ............ collecting</span><span>PENDING</span></div>
-      <div class="m-line pending" id="ml2"><span>Friends ............. compiling</span><span>PENDING</span></div>
-      <div class="m-line pending" id="ml3"><span>Service ............. rendering</span><span>PENDING</span></div>
-      <div class="m-line pending" id="ml4"><span>Legacy .............. finalizing</span><span>PENDING</span></div>
-    </div>
-
-    <div id="montageFinal" class="montage-final">ENDING SEQUENCE INITIALIZING...</div>
-    <button id="restartBtn2" class="restart">RESET PROTOCOL</button>
-  </div>
-
-  <div class="bottombar"><span>STANDBY FOR MONTAGE</span><span>READYING FINAL PLAYBACK</span></div>
-</section>
-
 <script>
-(() => {
-  const HOLD_MS = 2500;
-  const SCAN_MS = 11800;
-  const FINAL_TO_MONTAGE_MS = 5600;
-  const MONTAGE_MS = 9500;
-
-  const screens = {
-    boot: document.getElementById('boot'),
-    scan: document.getElementById('scan'),
-    decision: document.getElementById('decision'),
-    season: document.getElementById('season'),
-    archive: document.getElementById('archive'),
-    final: document.getElementById('final'),
-    montage: document.getElementById('montage')
+  // =========================================================
+  // UBAH BAHAGIAN INI SAHAJA UNTUK KESERASIAN MAJLIS ANDA
+  // =========================================================
+  const CONFIG = {
+    nameShort: 'DOS',
+    nameFull: 'TUAN DOS',
+    coverName: 'RASHID BIN JAMALUDDIN',
+    logoFile: 'logo maktab png.png',
+    verificationDurationMs: 4200,
+    launchSeconds: 3,
+    loadingDurationMs: 8500 // tempoh animasi loading (bukan memuatkan fail video)
   };
 
-  const sensor = document.getElementById('sensor');
-  const ring = document.getElementById('progressRing');
-  const status = document.getElementById('bootStatus');
-  const camera = document.getElementById('camera');
-  const cameraFallback = document.getElementById('cameraFallback');
-  const faceBox = document.getElementById('faceBox');
-  const scanBar = document.getElementById('scanBar');
-  const detectorState = document.getElementById('detectorState');
-  const captureFlash = document.getElementById('captureFlash');
-  const globalFlash = document.getElementById('globalFlash');
-  const verifiedImage = document.getElementById('verifiedImage');
-  const archiveLivePhoto = document.getElementById('archiveLivePhoto');
-  const memoryItems = [...document.querySelectorAll('.memory-item')];
-  const memoryStatus = document.getElementById('memoryStatus');
-  const seasonResult = document.getElementById('seasonResult');
-  const yes25Btn = document.getElementById('yes25Btn');
-  const recordPackets = [...document.querySelectorAll('.record-packet')];
-  const storyDossier = document.getElementById('storyDossier');
-  const folderFront = document.getElementById('folderFront');
-  const folderSeal = document.getElementById('folderSeal');
-  const archiveStatus2 = document.getElementById('archiveStatus2');
-  const archiveStage = document.getElementById('archiveStage');
-  const montageBarFill = document.getElementById('montageBarFill');
-  const montageFinal = document.getElementById('montageFinal');
-  const verifyRows = [
-    document.getElementById('vr1'),
-    document.getElementById('vr2'),
-    document.getElementById('vr3'),
-    document.getElementById('vr4')
-  ];
-  const montageLines = [
-    document.getElementById('ml1'),
-    document.getElementById('ml2'),
-    document.getElementById('ml3'),
-    document.getElementById('ml4')
-  ];
+  const $ = id => document.getElementById(id);
+  const scenes = ['intro','sign','verify','decision','launch','loading'];
+  let current = 'intro';
+  let verifyInterval = null;
+  let launchInterval = null;
+  let loadingRAF = null;
+  let ctx, drawing = false, inkDistance = 0, lastPoint = null, isSigned = false;
+  let audioCtx = null, sfxEnabled = true;
+  const canvas = $('signatureCanvas');
 
-  let pressStart = 0;
-  let raf = null;
-  let holding = false;
-  let stream = null;
-  let cameraPromise = null;
-  let audioCtx = null;
-  let detector = null;
-  let detectTimer = null;
-  let scanTimers = [];
-  let archiveTimers = [];
-  let finalTimers = [];
-  let montageTimers = [];
+  $('nameIntro').textContent = CONFIG.nameShort;
+  $('nameDoc').textContent = CONFIG.nameFull;
+  $('coverName').textContent = CONFIG.coverName;
+  $('crest').src = CONFIG.logoFile;
+  $('crest').addEventListener('error', () => { $('crestWrap').style.display = 'none'; });
 
-  function beep(freq=700,duration=.08,gain=.03){
-    try{
-      audioCtx ||= new (window.AudioContext || window.webkitAudioContext)();
-      const o = audioCtx.createOscillator();
-      const g = audioCtx.createGain();
-      o.type='sine';
-      o.frequency.value=freq;
-      g.gain.value=gain;
-      o.connect(g); g.connect(audioCtx.destination);
-      o.start();
-      g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+duration);
-      o.stop(audioCtx.currentTime+duration);
-    }catch(e){}
+  function show(scene) {
+    current = scene;
+    scenes.forEach(s => { const el = $('scene-' + s); el.classList.toggle('active', s === scene); el.setAttribute('aria-hidden', s === scene ? 'false' : 'true'); });
+    if (scene === 'sign') requestAnimationFrame(sizeCanvas);
   }
-
-  function flashBlack(){
-    globalFlash.classList.remove('go');
-    void globalFlash.offsetWidth;
-    globalFlash.classList.add('go');
+  function tone(freq=600, duration=.10, type='triangle', gain=.045, delay=0) {
+    if (!sfxEnabled) return;
+    try {
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const o=audioCtx.createOscillator(), g=audioCtx.createGain(), t=audioCtx.currentTime+delay;
+      o.type=type;o.frequency.setValueAtTime(freq,t);
+      g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(gain,t+.014);
+      g.gain.exponentialRampToValueAtTime(.0001,t+duration);
+      o.connect(g);g.connect(audioCtx.destination);o.start(t);o.stop(t+duration+.025);
+    } catch(e) { /* Audio tidak disokong; visual masih berfungsi */ }
   }
+  function clickSound() { tone(420,.08);tone(840,.11,'triangle',.035,.07); }
+  function successSound() { tone(440,.17,'triangle',.045);tone(554,.17,'triangle',.045,.14);tone(740,.28,'triangle',.05,.28); }
+  $('fullscreenBtn').addEventListener('click', async () => {
+    try { if (!document.fullscreenElement) await document.documentElement.requestFullscreen(); else await document.exitFullscreen(); } catch(e) {}
+  });
+  $('soundToggle').addEventListener('click', () => { sfxEnabled=!sfxEnabled; $('soundToggle').textContent='BUNYI: '+(sfxEnabled?'AKTIF':'MATI');$('soundToggle').setAttribute('aria-pressed',String(sfxEnabled)); if(sfxEnabled)clickSound(); });
 
-  function showScreen(el){
-    Object.values(screens).forEach(s => s.classList.remove('active'));
-    el.classList.add('active');
+  function sizeCanvas() {
+    const rect=canvas.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    const pixelRatio=Math.min(window.devicePixelRatio || 1,3);
+    let snapshot=null;
+    if(canvas.width && isSigned) { try {snapshot=canvas.toDataURL('image/png');}catch(e){} }
+    canvas.width=Math.round(rect.width*pixelRatio);
+    canvas.height=Math.round(rect.height*pixelRatio);
+    ctx=canvas.getContext('2d');ctx.setTransform(pixelRatio,0,0,pixelRatio,0,0);
+    ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=3.4;ctx.strokeStyle='#121326';ctx.fillStyle='#121326';
+    if(snapshot) { const img=new Image();img.onload=()=>{ctx.drawImage(img,0,0,rect.width,rect.height);};img.src=snapshot; }
   }
-
-  function addTimer(collection, fn, delay){
-    const id = setTimeout(fn, delay);
-    collection.push(id);
-    return id;
+  function point(e) { const r=canvas.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top}; }
+  canvas.addEventListener('pointerdown',e=>{
+    if(!ctx)sizeCanvas();
+    e.preventDefault();drawing=true;lastPoint=point(e);canvas.setPointerCapture(e.pointerId);
+    ctx.beginPath();ctx.arc(lastPoint.x,lastPoint.y,1.7,0,Math.PI*2);ctx.fill();
+    isSigned=true;$('signHint').textContent='';
+  });
+  canvas.addEventListener('pointermove',e=>{
+    if(!drawing || !ctx)return;
+    e.preventDefault();const p=point(e);ctx.beginPath();ctx.moveTo(lastPoint.x,lastPoint.y);ctx.lineTo(p.x,p.y);ctx.stroke();
+    inkDistance += Math.hypot(p.x-lastPoint.x,p.y-lastPoint.y);lastPoint=p;
+  });
+  function stopDrawing(){drawing=false;lastPoint=null}
+  canvas.addEventListener('pointerup',stopDrawing);canvas.addEventListener('pointercancel',stopDrawing);
+  canvas.addEventListener('lostpointercapture',stopDrawing);
+  $('clearBtn').addEventListener('click',()=>{if(ctx){ctx.clearRect(0,0,canvas.width,canvas.height);}inkDistance=0;isSigned=false;$('signHint').textContent='Tandatangan telah dipadam.';tone(320,.1);});
+  $('beginBtn').addEventListener('click',()=>{clickSound();show('sign')});
+  $('verifyBtn').addEventListener('click',()=>{
+    if(!isSigned || inkDistance<35){$('signHint').textContent='Sila tandatangan dahulu sebelum pengesahan.';tone(220,.2,'sawtooth',.02);return;}
+    $('signaturePreview').src=canvas.toDataURL('image/png');clickSound();show('verify');startVerification();
+  });
+  function startVerification(){
+    clearInterval(verifyInterval);
+    $('progressFill').style.width='0%';$('percent').textContent='00%';$('verifySuccess').textContent='';
+    for(let i=1;i<=4;i++){const r=$('check'+i);r.classList.remove('done');r.querySelector('.value').textContent='MENUNGGU';}
+    const started=performance.now();
+    verifyInterval=setInterval(()=>{
+      const pct=Math.min(100,Math.floor((performance.now()-started)/CONFIG.verificationDurationMs*100));
+      $('progressFill').style.width=pct+'%';$('percent').textContent=String(pct).padStart(2,'0')+'%';
+      [16,39,67,91].forEach((threshold,i)=>{
+        if(pct>=threshold){const row=$('check'+(i+1));if(!row.classList.contains('done')){row.classList.add('done');row.querySelector('.value').textContent='DISAHKAN';tone(430+(i*120),.08,'triangle',.035)}}
+      });
+      if(pct>=100){clearInterval(verifyInterval);$('verifySuccess').textContent='✓ TANDATANGAN DITERIMA';successSound();setTimeout(()=>{if(current==='verify')show('decision')},1250)}
+    },45);
   }
-
-  function clearTimers(collection){
-    collection.forEach(clearTimeout);
-    collection.length = 0;
-  }
-
-  function setVerifyRow(row, state){
-    row.classList.remove('pending','verifying','verified');
-    row.classList.add(state);
-    const badge = row.querySelector('.verify-badge');
-    badge.textContent = state === 'pending' ? 'PENDING' : state === 'verifying' ? 'VERIFYING' : 'VERIFIED';
-  }
-
-  function setMontageLine(row, state){
-    row.classList.remove('pending','loading','ready');
-    row.classList.add(state);
-    const label = row.querySelector('span:last-child');
-    label.textContent = state === 'pending' ? 'PENDING' : state === 'loading' ? 'LOADING' : 'READY';
-  }
-
-  async function prepareCamera(){
-    if(stream && stream.active){
-      if(camera.srcObject !== stream) camera.srcObject = stream;
-      try{ await camera.play(); }catch(e){}
-      return true;
-    }
-    if(cameraPromise) return cameraPromise;
-
-    cameraPromise = (async () => {
-      try{
-        if(!navigator.mediaDevices?.getUserMedia) throw new Error('getUserMedia unavailable');
-        stream = await navigator.mediaDevices.getUserMedia({
-          video:{ facingMode:{ideal:'user'}, width:{ideal:1280}, height:{ideal:720} },
-          audio:false
-        });
-        camera.srcObject = stream;
-        camera.muted = true;
-        camera.setAttribute('playsinline','');
-        await camera.play();
-        cameraFallback.style.display = 'none';
-        return true;
-      }catch(err){
-        console.error('Camera error:', err);
-        cameraFallback.textContent = 'CAMERA ACCESS FAILED // VISUAL SIMULATION';
-        cameraFallback.style.display = 'grid';
-        return false;
-      }finally{
-        cameraPromise = null;
+  $('noBtn').addEventListener('click',()=>{tone(250,.18,'sawtooth',.027);$('twist').classList.add('show');$('noBtn').style.opacity='.65'});
+  $('retryBtn').addEventListener('click',()=>{$('twist').classList.remove('show');$('noBtn').style.opacity='1';clickSound()});
+  $('yesBtn').addEventListener('click',()=>{
+    successSound();
+    $('twist').classList.remove('show');
+    show('launch');
+    startLaunch();
+  });
+  function startLaunch(){
+    clearInterval(launchInterval);
+    let seconds=CONFIG.launchSeconds;
+    $('launchCount').textContent=seconds;$('launchFill').style.width='0%';
+    $('launchStatus').textContent='HALAMAN TERAKHIR TELAH DIMETERAI';
+    launchInterval=setInterval(()=>{
+      seconds--;
+      if(seconds>0){
+        $('launchCount').textContent=seconds;
+        $('launchFill').style.width=((CONFIG.launchSeconds-seconds)/CONFIG.launchSeconds*100)+'%';
+        tone(570,.16,'triangle',.055);
+      } else {
+        clearInterval(launchInterval);
+        $('launchCount').textContent='MULA!';
+        $('launchFill').style.width='100%';
+        $('launchStatus').textContent='MEMUATKAN VIDEO MONTAJ...';
+        tone(830,.22,'triangle',.045);
+        setTimeout(()=>{if(current==='launch')startLoadingMontage()},650);
       }
-    })();
-
-    return cameraPromise;
+    },1000);
   }
-
-  function stopCamera(){
-    if(stream){
-      stream.getTracks().forEach(t => t.stop());
-      stream = null;
-      camera.srcObject = null;
-    }
-  }
-
-  function loadMemoryImages(){
-    const extensions = ['.jpg','.jpeg','.png','.webp','.JPG','.JPEG','.PNG','.WEBP'];
-    memoryItems.forEach(item => {
-      const img = item.querySelector('img');
-      const base = item.dataset.base;
-      let index = 0;
-
-      const tryNext = () => {
-        if(index >= extensions.length){
-          item.classList.add('missing');
-          return;
-        }
-        img.src = encodeURI(base + extensions[index++]);
-      };
-
-      img.addEventListener('error', tryNext);
-      img.addEventListener('load', () => item.classList.remove('missing'));
-      tryNext();
-    });
-  }
-
-  function resetMemoryPanel(){
-    memoryStatus.textContent = 'WAITING FOR STORY VERIFICATION...';
-    memoryItems.forEach(item => item.classList.remove('active','scanning','matched'));
-    verifyRows.forEach(row => setVerifyRow(row,'pending'));
-  }
-
-  function animateMemoryPanel(){
-    resetMemoryPanel();
-    memoryStatus.textContent = 'QUERYING STORY ARCHIVE...';
-
-    memoryItems.forEach((item,index) => {
-      addTimer(scanTimers, () => {
-        item.classList.add('active','scanning');
-        if(index===0) memoryStatus.textContent = 'READING MEMORY PANEL 01...';
-        if(index===2) memoryStatus.textContent = 'CROSS-CHECKING CHARACTER HISTORY...';
-        if(index===4) memoryStatus.textContent = 'MATCHING LEGACY SIGNATURE...';
-        if(index===6) memoryStatus.textContent = 'FINALIZING PRIMARY STORY RECORD...';
-        beep(610 + index * 36, .035, .018);
-      }, 850 + index * 780);
-    });
-
-    addTimer(scanTimers, () => {
-      memoryItems.forEach(item => item.classList.remove('scanning'));
-      const last = memoryItems.at(-1);
-      if(last) last.classList.add('matched');
-      memoryStatus.textContent = 'PRIMARY STORY MATCH CONFIRMED';
-      setVerifyRow(verifyRows[0],'verifying');
-      beep(940,.08,.03);
-    }, 6500);
-
-    addTimer(scanTimers, () => {
-      setVerifyRow(verifyRows[0],'verified');
-      setVerifyRow(verifyRows[1],'verifying');
-      memoryStatus.textContent = 'VERIFYING CHARACTER ROLE // GURU BAHASA MELAYU';
-      beep(740,.05,.02);
-    }, 7700);
-
-    addTimer(scanTimers, () => {
-      setVerifyRow(verifyRows[1],'verified');
-      setVerifyRow(verifyRows[2],'verifying');
-      memoryStatus.textContent = 'VERIFYING DEPARTMENT ROLE...';
-      beep(810,.05,.022);
-    }, 9000);
-
-    addTimer(scanTimers, () => {
-      setVerifyRow(verifyRows[2],'verified');
-      setVerifyRow(verifyRows[3],'verifying');
-      memoryStatus.textContent = 'VERIFYING FINAL ARC PROFILE...';
-      beep(880,.05,.024);
-    }, 10200);
-
-    addTimer(scanTimers, () => {
-      setVerifyRow(verifyRows[3],'verified');
-      memoryStatus.textContent = 'ALL CHARACTER ATTRIBUTES VERIFIED';
-      beep(1100,.12,.04);
-    }, 11250);
-  }
-
-  function startHold(e){
-    e.preventDefault();
-    if(holding) return;
-    holding = true;
-    sensor.classList.add('holding');
-    pressStart = performance.now();
-    status.textContent = 'READING CHARACTER SIGNATURE...';
-    beep(520,.06);
-    prepareCamera();
-
-    const tick = now => {
-      if(!holding) return;
-      const pct = Math.min(100, ((now - pressStart) / HOLD_MS) * 100);
-      ring.style.strokeDashoffset = (100 - pct).toFixed(2);
-
-      if(pct >= 100){
-        holding = false;
-        sensor.classList.remove('holding');
-        ring.style.strokeDashoffset = 0;
-        status.textContent = 'CHARACTER SIGNATURE ACQUIRED';
-        beep(980,.15,.045);
-        setTimeout(beginScan, 330);
-        return;
+  function startLoadingMontage(){
+    if(loadingRAF !== null) cancelAnimationFrame(loadingRAF);
+    show('loading');
+    $('scene-loading').classList.remove('ready');
+    $('loadingKicker').textContent='ARKIB KENANGAN SEDANG DIBUKA';
+    $('loadingTitle').innerHTML='MEMUATKAN VIDEO<br><em>MONTAJ</em><span class="loading-dots" aria-hidden="true">...</span>';
+    $('loadingMessage').textContent='MENYUSUN HELAIAN KENANGAN...';
+    $('loadingPercent').textContent='00%';
+    $('loadingFill').style.width='0%';
+    $('loadingMeter').setAttribute('aria-valuenow','0');
+    $('loadingFinish').classList.remove('visible');
+    // Loading ini gimik simbolik untuk peralihan operator ke video Canva.
+    // Ia tidak memuatkan / memainkan fail video secara automatik.
+    const started=performance.now();
+    let previousStage=-1;
+    function tick(now){
+      if(current!=='loading') return;
+      const t=Math.min(1,(now-started)/Math.max(1000,CONFIG.loadingDurationMs));
+      const percent=Math.min(100,Math.floor((1-Math.pow(1-t,1.36))*100));
+      $('loadingFill').style.width=percent+'%';
+      $('loadingPercent').textContent=String(percent).padStart(2,'0')+'%';
+      $('loadingMeter').setAttribute('aria-valuenow',String(percent));
+      const stage=percent<26?0:percent<57?1:percent<87?2:3;
+      if(stage!==previousStage){
+        const labels=['MENYUSUN HELAIAN KENANGAN...','MEMBUKA ARKIB PERJALANAN...','MENGHIMPUN DETIK BERMAKNA...','MENYEDIAKAN BABAK TERAKHIR...'];
+        $('loadingMessage').textContent=labels[stage];
+        if(stage>0)tone(390+stage*105,.08,'triangle',.025);
+        previousStage=stage;
       }
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-  }
-
-  function cancelHold(){
-    if(!holding) return;
-    holding = false;
-    sensor.classList.remove('holding');
-    cancelAnimationFrame(raf);
-    ring.style.strokeDashoffset = 100;
-    status.textContent = 'HOLD INTERRUPTED // RETRY';
-    beep(220,.08,.02);
-    setTimeout(() => {
-      if(!holding) status.textContent = 'SYSTEM STANDBY';
-    }, 700);
-  }
-
-  sensor.addEventListener('pointerdown', startHold);
-  window.addEventListener('pointerup', cancelHold);
-  window.addEventListener('pointercancel', cancelHold);
-  sensor.addEventListener('contextmenu', e => e.preventDefault());
-  sensor.addEventListener('touchstart', e => e.preventDefault(), {passive:false});
-  sensor.addEventListener('touchend', e => e.preventDefault(), {passive:false});
-
-  async function beginScan(){
-    clearTimers(scanTimers);
-    clearTimers(finalTimers);
-    clearTimers(montageTimers);
-    const camOK = await prepareCamera();
-    showScreen(screens.scan);
-    beep(760,.06);
-    setTimeout(() => beep(900,.06), 110);
-
-    camera.style.display = camOK ? 'block' : 'none';
-    cameraFallback.style.display = camOK ? 'none' : 'grid';
-    detectorState.textContent = camOK ? 'FACE TRACK: INIT' : 'CAMERA: SIMULATION';
-
-    animateMemoryPanel();
-    startFaceDetection();
-    runScanSequence();
-  }
-
-  function runScanSequence(){
-    const l1 = document.getElementById('scanLine1');
-    const l2 = document.getElementById('scanLine2');
-    const l3 = document.getElementById('scanLine3');
-    const l4 = document.getElementById('scanLine4');
-    const l5 = document.getElementById('scanLine5');
-    const start = performance.now();
-
-    const msgs = [
-      [0,    ()=>{l1.textContent='INITIALIZING FACIAL MAPPING...'; beep(620,.045);}],
-      [1500, ()=>{l1.innerHTML='<span class="ok">FACIAL LANDMARKS ACQUIRED</span>'; l2.textContent='GEOMETRIC VECTOR: ANALYZING'; beep(700,.05);}],
-      [3400, ()=>{l2.innerHTML='<span class="ok">GEOMETRIC VECTOR: STABLE</span>'; l3.textContent='IDENTITY MATRIX: CROSS-CHECKING'; beep(760,.05);}],
-      [5500, ()=>{l3.innerHTML='<span class="ok">IDENTITY MATRIX: MATCH FOUND</span>'; l4.textContent='CHARACTER ROLE MATRIX: VERIFYING'; beep(840,.07);}],
-      [7800, ()=>{l4.innerHTML='<span class="ok">ROLE MATCH: GURU BAHASA MELAYU</span>'; l5.textContent='FINAL ARC PROFILE: VERIFYING'; beep(910,.07);}],
-      [9800, ()=>{l5.innerHTML='<span class="ok">PROFILE MATCH: KETUA JABATAN SUKAN & KOKURIKULUM</span>'; beep(980,.09);}],
-      [11100,()=>{l1.innerHTML='<span class="ok">CHARACTER SIGNATURE VERIFIED</span>'; l2.innerHTML='<span class="ok">CODE NAME: RASHID</span>'; l3.innerHTML='<span class="ok">FINAL ARC CONFIRMED</span>'; beep(1120,.12,.045);}],
-    ];
-    msgs.forEach(([t,fn]) => addTimer(scanTimers, fn, t));
-
-    const animate = now => {
-      if(!screens.scan.classList.contains('active')) return;
-      const pct = Math.min(100, ((now - start) / SCAN_MS) * 100);
-      scanBar.style.width = pct + '%';
-      if(pct < 100) requestAnimationFrame(animate);
-      else completeScan();
-    };
-    requestAnimationFrame(animate);
-  }
-
-  function captureIdentityPhoto(){
-    if(!stream || camera.readyState < 2 || !camera.videoWidth || !camera.videoHeight) return false;
-    try{
-      const canvas = document.createElement('canvas');
-      const vw = camera.videoWidth, vh = camera.videoHeight;
-      const targetRatio = 4 / 5;
-      let cropW = vw, cropH = cropW / targetRatio;
-      if(cropH > vh){ cropH = vh; cropW = cropH * targetRatio; }
-      const sx = Math.max(0, (vw - cropW) / 2);
-      const sy = Math.max(0, Math.min(vh - cropH, (vh - cropH) * .38));
-
-      canvas.width = 480;
-      canvas.height = 600;
-      const ctx = canvas.getContext('2d');
-      ctx.translate(canvas.width,0);
-      ctx.scale(-1,1);
-      ctx.drawImage(camera, sx, sy, cropW, cropH, 0, 0, canvas.width, canvas.height);
-
-      verifiedImage.style.transform = 'none';
-      verifiedImage.src = canvas.toDataURL('image/jpeg', .9);
-      return true;
-    }catch(err){
-      console.error('Snapshot error:', err);
-      return false;
-    }
-  }
-
-  function completeScan(){
-    const captured = captureIdentityPhoto();
-    captureFlash.classList.remove('go');
-    void captureFlash.offsetWidth;
-    captureFlash.classList.add('go');
-    beep(1180,.16,.045);
-
-    setTimeout(() => {
-      stopDetection();
-      if(captured) archiveLivePhoto.src = verifiedImage.src;
-      showScreen(screens.decision);
-      beep(620,.06,.025);
-      setTimeout(() => beep(880,.08,.03), 120);
-    }, 500);
-  }
-
-  function startFaceDetection(){
-    stopDetection();
-
-    if('FaceDetector' in window && stream){
-      try{
-        detector = new FaceDetector({fastMode:true,maxDetectedFaces:1});
-        detectorState.textContent = 'FACE TRACK: ACTIVE';
-
-        detectTimer = setInterval(async () => {
-          try{
-            if(camera.readyState < 2) return;
-            const faces = await detector.detect(camera);
-            if(!faces.length){
-              detectorState.textContent = 'FACE TRACK: SEARCHING';
-              return;
-            }
-            detectorState.textContent = 'FACE TRACK: LOCKED';
-
-            const b = faces[0].boundingBox;
-            const stage = camera.closest('.camera-stage');
-            const cw = stage.clientWidth, ch = stage.clientHeight;
-            const vw = camera.videoWidth || 1, vh = camera.videoHeight || 1;
-            const scale = Math.max(cw / vw, ch / vh);
-            const renderedW = vw * scale, renderedH = vh * scale;
-            const offX = (cw - renderedW) / 2, offY = (ch - renderedH) / 2;
-            const x = cw - (offX + (b.x + b.width) * scale);
-            const y = offY + b.y * scale;
-            const w = b.width * scale, h = b.height * scale;
-
-            faceBox.style.left = (x + w / 2) + 'px';
-            faceBox.style.top = (y + h / 2) + 'px';
-            faceBox.style.width = Math.max(170, w * 1.35) + 'px';
-            faceBox.style.height = Math.max(225, h * 1.55) + 'px';
-          }catch(e){}
-        }, 190);
-      }catch(e){
-        detectorState.textContent = 'FACE TRACK: VISUAL MODE';
+      if(t<1) {
+        loadingRAF=requestAnimationFrame(tick);
+      } else {
+        loadingRAF=null;
+        $('loadingFill').style.width='100%';
+        $('loadingPercent').textContent='100%';
+        $('loadingMeter').setAttribute('aria-valuenow','100');
+        $('loadingKicker').textContent='DOS THE FINAL ARC · SELESAI';
+        $('loadingTitle').innerHTML='VIDEO MONTAJ<br><em>SEDIA</em>';
+        $('loadingMessage').textContent='BERSIAP SEDIA // MONTAJ SIAP';
+        $('loadingFinish').classList.add('visible');
+        $('scene-loading').classList.add('ready');
+        successSound();
       }
-    }else{
-      detectorState.textContent = stream ? 'FACE TRACK: VISUAL MODE' : 'CAMERA: SIMULATION';
     }
+    loadingRAF=requestAnimationFrame(tick);
   }
-
-  function stopDetection(){
-    if(detectTimer) clearInterval(detectTimer);
-    detectTimer = null;
-    detector = null;
+  function resetGimik(){
+    clearInterval(verifyInterval);clearInterval(launchInterval);
+    if(loadingRAF!==null){cancelAnimationFrame(loadingRAF);loadingRAF=null;}
+    if(ctx)ctx.clearRect(0,0,canvas.width,canvas.height);
+    isSigned=false;inkDistance=0;
+    $('twist').classList.remove('show');$('noBtn').style.opacity='1';
+    $('signHint').textContent='';clickSound();show('intro');
   }
-
-  document.getElementById('notRetireBtn').addEventListener('click', () => {
-    beep(420,.06,.025);
-    seasonResult.className = 'season-result';
-    seasonResult.textContent = '';
-    yes25Btn.disabled = false;
-    showScreen(screens.season);
+  // Untuk rehearsal sahaja: tekan R semasa skrin loading untuk ulang dari awal.
+  window.addEventListener('keydown',e=>{
+    if(e.key.toLowerCase()==='r' && current==='loading')resetGimik();
   });
-
-  yes25Btn.addEventListener('click', () => {
-    beep(300,.12,.035);
-    yes25Btn.disabled = true;
-    seasonResult.textContent = 'PRODUCTION COMMITTEE: REJECTED // 25-YEAR SEASON RENEWAL DENIED';
-    seasonResult.className = 'season-result declined';
-    flashBlack();
-    setTimeout(() => beep(180,.16,.04), 120);
-  });
-
-  document.getElementById('backBtn').addEventListener('click', () => {
-    beep(620,.06,.025);
-    seasonResult.className = 'season-result';
-    seasonResult.textContent = '';
-    yes25Btn.disabled = false;
-    showScreen(screens.decision);
-  });
-
-  document.getElementById('retireBtn').addEventListener('click', () => {
-    beep(980,.12,.045);
-    prepareArchiveSequence();
-    showScreen(screens.archive);
-    runArchiveSequence();
-  });
-
-  document.getElementById('restartBtn').addEventListener('click', resetExperience);
-  document.getElementById('restartBtn2').addEventListener('click', resetExperience);
-
-  function prepareArchiveSequence(){
-    const sourceImages = memoryItems.map(i => i.querySelector('img').src);
-    document.querySelectorAll('[data-copy]').forEach(img => {
-      const idx = Number(img.dataset.copy);
-      if(sourceImages[idx]) img.src = sourceImages[idx];
-    });
-    if(verifiedImage.src) archiveLivePhoto.src = verifiedImage.src;
-
-    recordPackets.forEach(p => p.classList.remove('fly'));
-    storyDossier.classList.remove('fly');
-    folderFront.classList.remove('closed');
-    folderSeal.classList.remove('show');
-    archiveStage.classList.remove('focus-folder');
-    archiveStatus2.textContent = 'PREPARING FINAL STORY PANELS...';
-  }
-
-  function runArchiveSequence(){
-    clearTimers(archiveTimers);
-    const historical = recordPackets.filter(p => !p.classList.contains('rpLive'));
-
-    addTimer(archiveTimers, () => {
-      archiveStatus2.textContent = 'VERIFYING MEMORY PANELS...';
-      beep(640,.05,.02);
-    }, 900);
-
-    historical.forEach((packet,index) => {
-      addTimer(archiveTimers, () => {
-        packet.classList.add('fly');
-        archiveStatus2.textContent = `ARCHIVING MEMORY PANEL ${String(index+1).padStart(2,'0')} OF 07...`;
-        beep(680 + index * 34, .04, .018);
-      }, 2100 + index * 1500);
-    });
-
-    addTimer(archiveTimers, () => {
-      archiveStatus2.textContent = 'ARCHIVING LIVE CHARACTER ID...';
-      document.querySelector('.record-packet.rpLive').classList.add('fly');
-      beep(980,.09,.035);
-    }, 13200);
-
-    addTimer(archiveTimers, () => {
-      archiveStatus2.textContent = 'ARCHIVING STORY DOSSIER...';
-      storyDossier.classList.add('fly');
-      beep(1060,.1,.04);
-    }, 16100);
-
-    addTimer(archiveTimers, () => {
-      archiveStatus2.textContent = 'ALL RECORDS SECURED // FOCUSING FINAL CHAPTER FILE...';
-      beep(760,.08,.03);
-    }, 18800);
-
-    addTimer(archiveTimers, () => {
-      archiveStage.classList.add('focus-folder');
-      archiveStatus2.textContent = 'ENLARGING STORY ARCHIVE BEFORE SEALING...';
-      beep(880,.12,.034);
-    }, 20400);
-
-    addTimer(archiveTimers, () => {
-      archiveStatus2.textContent = 'CLOSING COMPLETE STORY ARCHIVE...';
-      folderFront.classList.add('closed');
-      beep(760,.12,.035);
-    }, 22400);
-
-    addTimer(archiveTimers, () => {
-      folderSeal.classList.add('show');
-      archiveStatus2.textContent = 'FINAL CHAPTER COMPLETE // ARCHIVED WITH HONOUR';
-      beep(1180,.18,.045);
-    }, 24500);
-
-    addTimer(archiveTimers, () => {
-      flashBlack();
-      showScreen(screens.final);
-      const card = document.getElementById('finalCard');
-      card.classList.remove('glitch');
-      void card.offsetWidth;
-      card.classList.add('glitch');
-      beep(540,.08,.03);
-      setTimeout(() => beep(780,.09,.035), 160);
-      setTimeout(() => beep(1080,.22,.045), 340);
-      startFinalTransition();
-    }, 27200);
-  }
-
-  function startFinalTransition(){
-    clearTimers(finalTimers);
-    addTimer(finalTimers, () => {
-      flashBlack();
-      showScreen(screens.montage);
-      startMontageLoading();
-      beep(720,.08,.03);
-      setTimeout(() => beep(920,.08,.032), 140);
-    }, FINAL_TO_MONTAGE_MS);
-  }
-
-  function startMontageLoading(){
-    clearTimers(montageTimers);
-    montageBarFill.style.width = '0%';
-    montageFinal.textContent = 'ENDING SEQUENCE INITIALIZING...';
-    montageLines.forEach(line => setMontageLine(line,'pending'));
-
-    addTimer(montageTimers, () => { setMontageLine(montageLines[0],'loading'); }, 300);
-    addTimer(montageTimers, () => { setMontageLine(montageLines[0],'ready'); setMontageLine(montageLines[1],'loading'); beep(760,.06,.02); }, 2200);
-    addTimer(montageTimers, () => { setMontageLine(montageLines[1],'ready'); setMontageLine(montageLines[2],'loading'); beep(820,.06,.02); }, 4300);
-    addTimer(montageTimers, () => { setMontageLine(montageLines[2],'ready'); setMontageLine(montageLines[3],'loading'); beep(900,.06,.024); }, 6500);
-    addTimer(montageTimers, () => { setMontageLine(montageLines[3],'ready'); montageFinal.textContent = 'ENDING SEQUENCE READY // TRANSITION STANDBY'; beep(1100,.12,.04); }, 9000);
-
-    const start = performance.now();
-    const animate = now => {
-      if(!screens.montage.classList.contains('active')) return;
-      const pct = Math.min(100, ((now - start) / MONTAGE_MS) * 100);
-      montageBarFill.style.width = pct + '%';
-      if(pct < 100) requestAnimationFrame(animate);
-    };
-    requestAnimationFrame(animate);
-  }
-
-  function resetExperience(){
-    clearTimers(scanTimers);
-    clearTimers(archiveTimers);
-    clearTimers(finalTimers);
-    clearTimers(montageTimers);
-    stopDetection();
-
-    holding = false;
-    sensor.classList.remove('holding');
-    if(raf) cancelAnimationFrame(raf);
-
-    ring.style.strokeDashoffset = 100;
-    scanBar.style.width = '0';
-    status.textContent = 'SYSTEM STANDBY';
-
-    document.getElementById('scanLine1').textContent = 'INITIALIZING FACIAL MAPPING...';
-    document.getElementById('scanLine2').textContent = 'GEOMETRIC VECTOR: PENDING';
-    document.getElementById('scanLine3').textContent = 'IDENTITY MATRIX: PENDING';
-    document.getElementById('scanLine4').textContent = 'CHARACTER ROLE MATRIX: PENDING';
-    document.getElementById('scanLine5').textContent = 'FINAL ARC PROFILE: PENDING';
-    faceBox.removeAttribute('style');
-
-    seasonResult.className = 'season-result';
-    seasonResult.textContent = '';
-    yes25Btn.disabled = false;
-
-    verifiedImage.removeAttribute('src');
-    verifiedImage.style.transform = '';
-    archiveLivePhoto.removeAttribute('src');
-
-    montageBarFill.style.width = '0%';
-    montageFinal.textContent = 'ENDING SEQUENCE INITIALIZING...';
-    montageLines.forEach(line => setMontageLine(line,'pending'));
-
-    resetMemoryPanel();
-    prepareArchiveSequence();
-    showScreen(screens.boot);
-  }
-
-  window.resetExperience = resetExperience;
-  window.addEventListener('beforeunload', stopCamera);
-  window.addEventListener('pagehide', stopCamera);
-
-  const maktabLogo = document.getElementById('maktabLogo');
-  maktabLogo.addEventListener('error', () => {
-    console.warn('Logo file not found: logo maktab png.png');
-    maktabLogo.style.display = 'none';
-  });
-
-  loadMemoryImages();
-
-  setInterval(() => {
-    const d = new Date();
-    document.getElementById('timecode').textContent =
-      [d.getHours(), d.getMinutes(), d.getSeconds()].map(v => String(v).padStart(2,'0')).join(':');
-  }, 250);
-
-  document.addEventListener('keydown', e => {
-    if(e.key.toLowerCase() === 'r') resetExperience();
-  });
-})();
+  window.addEventListener('resize',()=>{if(current==='sign')sizeCanvas()});
 </script>
 </body>
 </html>
