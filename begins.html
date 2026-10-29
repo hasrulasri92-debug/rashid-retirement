@@ -93,10 +93,6 @@
     .choice .small {font-size:10px;letter-spacing:.2em;font-weight:900;display:block;margin-bottom:10px}
     .choice strong {font-size:clamp(22px,3.2vw,37px);line-height:1.1;font-family:Impact,"Arial Black",sans-serif;letter-spacing:.02em;display:block}
     .choice .arr {position:absolute;right:22px;bottom:16px;font-size:27px;font-weight:900}
-    .twist {margin:25px auto 0;padding:17px;background:rgba(255,75,87,.20);border:1px solid var(--red);max-width:700px;display:none;line-height:1.55}
-    .twist.show {display:block;animation:pop .4s var(--ease)}
-    .twist strong {display:block;color:var(--gold);font-size:19px;letter-spacing:.08em;margin-bottom:4px}
-    .twist button {background:transparent;border:0;color:#fff;text-decoration:underline;text-underline-offset:5px;margin-top:9px;font-weight:900;padding:6px}
     .launch-scene .scene-body {text-align:center;max-width:930px}
     .launch-plate {border:3px solid var(--gold);background:rgba(10,10,18,.8);box-shadow:15px 15px 0 var(--red);padding:clamp(25px,5vw,60px)}
     .launch-count {font-family:Impact,"Arial Black",sans-serif;line-height:1;color:var(--gold);font-size:clamp(135px,23vw,300px);text-shadow:10px 10px 0 var(--red2);animation:countpop .8s var(--ease) infinite alternate}
@@ -184,7 +180,6 @@
     .choice.yes {background:#f2d9cf;color:#331a2d}
     .choice.no {background:#67324d;color:#fff4e8}
     .choice {border:2px solid #edc3c5;box-shadow:9px 9px 0 #27111f}
-    .twist {background:rgba(158,68,108,.3);border-color:#ecb3ca}
     .launch-plate {background:rgba(48,19,37,.86);box-shadow:15px 15px 0 #a85b7d;border-color:#ebc0b9}
     .launch-progress {background:#63374e}
     .fragment {background:rgba(231,181,195,.55)}
@@ -283,6 +278,27 @@
       .loading-title{font-size:clamp(53px,12vw,90px)}.loading-topline{font-size:8px;letter-spacing:.12em}.loading-meter{margin-top:22px}.loading-footerline{letter-spacing:.12em}}
     @media(max-height:740px) and (min-width:751px){.loading-illustration{transform:scale(.78);height:132px;margin:5px auto 3px}.loading-title{font-size:clamp(60px,7vw,100px)}.loading-footerline{margin-top:15px}}
     @media(prefers-reduced-motion:reduce){.loading-dots,.loading-book-page,.loading-circle,.loading-rays{animation:none!important}}
+
+    /* BABAK RAHSIA: ERROR 404 APABILA MEMILIH TERUS BERJUANG */
+    .error-scene {background:radial-gradient(ellipse at 50% 38%,#753752 0%,#3f1e35 46%,#1a0c19 100%);text-align:center;overflow:hidden}
+    .error-scene::before {content:"";position:absolute;inset:-30%;pointer-events:none;opacity:.20;background:repeating-conic-gradient(from 0deg at 50% 50%,#f4c7ca 0deg 1.4deg,transparent 1.5deg 14deg);animation:slowspin 140s linear infinite}
+    .error-scene::after {content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;background:repeating-linear-gradient(0deg,rgba(13,5,15,.5) 0 2px,transparent 3px 8px)}
+    .error-body {position:relative;z-index:2;max-width:980px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+    .error-top {display:inline-block;border:2px solid #ebafbe;padding:9px 19px;color:#f4d8d2;background:rgba(35,12,31,.6);font-size:clamp(10px,1.2vw,14px);font-weight:900;letter-spacing:.24em;transform:rotate(-2deg);animation:errorBlink 1.7s step-end infinite}
+    .error-code {font-family:Impact,'Arial Black',sans-serif;font-size:clamp(130px,24vw,300px);line-height:.86;letter-spacing:-.025em;color:#ffe4d4;text-shadow:9px 11px 0 #a95075,17px 19px 0 rgba(13,4,13,.75);margin:20px 0 24px;position:relative;animation:errorJolt 3s steps(1,end) infinite}
+    .error-code::before,.error-code::after {content:attr(data-code);position:absolute;inset:0;pointer-events:none;opacity:.63}
+    .error-code::before {color:#ec91b2;clip-path:inset(17% 0 60% 0);transform:translate(-9px,-3px);animation:errorSliceTop 2.4s steps(1,end) infinite}
+    .error-code::after {color:#e5b1c9;clip-path:inset(69% 0 12% 0);transform:translate(8px,4px);animation:errorSliceBottom 2.1s steps(1,end) infinite}
+    .error-title {margin:0 0 13px;font:900 clamp(23px,3.3vw,43px) Impact,'Arial Black',sans-serif;letter-spacing:.07em;line-height:1.14;color:#ffe8de;text-transform:uppercase}
+    .error-copy {max-width:690px;margin:0 auto 25px;color:#edcbd3;font-size:clamp(13px,1.5vw,18px);line-height:1.7}
+    .error-tag {color:#f4c1cb;font-weight:900;letter-spacing:.14em;font-size:clamp(10px,1.05vw,12px);margin-bottom:22px}
+    .error-return {min-height:56px}
+    @keyframes errorBlink {50%{opacity:.68}}
+    @keyframes errorJolt {0%,90%,94%,100%{transform:none}91%{transform:translateX(-4px) skewX(2deg)}93%{transform:translateX(5px) skewX(-2deg)}}
+    @keyframes errorSliceTop {0%,88%,100%{transform:translate(-9px,-3px)}90%{transform:translate(11px,1px)}93%{transform:translate(-5px,0)}}
+    @keyframes errorSliceBottom {0%,87%,100%{transform:translate(8px,4px)}90%{transform:translate(-8px,-2px)}95%{transform:translate(5px,3px)}}
+    @media(max-width:750px){.error-code{font-size:clamp(105px,28vw,195px);margin:23px 0 18px}.error-title{font-size:clamp(22px,6vw,32px)}.error-top{letter-spacing:.13em}}
+    @media(prefers-reduced-motion:reduce){.error-scene::before,.error-top,.error-code,.error-code::before,.error-code::after{animation:none!important}}
   </style>
 </head>
 <body>
@@ -368,9 +384,18 @@
         <p class="panel-copy" style="margin-left:auto;margin-right:auto">Tuan Dos, pilihan di tangan Tuan. Adakah Tuan bersedia membuka bab baharu?</p>
         <div class="choices">
           <button type="button" class="choice yes" id="yesBtn"><span class="small">PILIHAN 01 // PERMULAAN BAHARU</span><strong>YA, SAYA BERSARA</strong><span class="arr">➜</span></button>
-          <button type="button" class="choice no" id="noBtn"><span class="small">PILIHAN 02 // KEJUTAN CERITA</span><strong>TIDAK, BELUM LAGI!</strong><span class="arr">↗</span></button>
+          <button type="button" class="choice no" id="noBtn"><span class="small">PILIHAN 02 // HALUAN ALTERNATIF</span><strong>TERUS BERJUANG</strong><span class="arr">↗</span></button>
         </div>
-        <div class="twist" id="twist" role="status"><strong>⚡ PLOT TWIST!</strong>Watak utama masih mahu menyambung misi! Tetapi bab terakhir masih menunggu keputusan Tuan...<div><button type="button" id="retryBtn">← KEMBALI KE PILIHAN</button></div></div>
+      </div>
+    </section>
+    <section class="scene error-scene" id="scene-error" aria-label="Ralat 404: pilihan terus berjuang tidak ditemui">
+      <div class="scene-body error-body">
+        <div class="error-top">⚠ GANGGUAN SISTEM DIKESAN ⚠</div>
+        <div class="error-code" data-code="404" aria-label="ERROR 404">404</div>
+        <h2 class="error-title">ERROR 404<br>PILIHAN TIDAK DITEMUI!</h2>
+        <p class="error-copy">Maaf, Tuan Dos. Laluan <strong>“Terus Berjuang”</strong> tidak lagi tersedia.<br>Bab perkhidmatan telah sampai ke penghujungnya. Sebuah perjalanan baharu sedang menanti!</p>
+        <div class="error-tag">KOD RALAT: 404 / LALUAN TIDAK WUJUD</div>
+        <button type="button" class="primary error-return" id="retryBtn">← KEMBALI KE PILIHAN PERSARAAN</button>
       </div>
     </section>
     <section class="scene launch-scene" id="scene-launch" aria-label="Memulakan montaj">
@@ -425,7 +450,7 @@
   };
 
   const $ = id => document.getElementById(id);
-  const scenes = ['intro','sign','verify','decision','launch','loading'];
+  const scenes = ['intro','sign','verify','decision','error','launch','loading'];
   let current = 'intro';
   let verifyInterval = null;
   let launchInterval = null;
@@ -511,11 +536,14 @@
       if(pct>=100){clearInterval(verifyInterval);$('verifySuccess').textContent='✓ TANDATANGAN DITERIMA';successSound();setTimeout(()=>{if(current==='verify')show('decision')},1250)}
     },45);
   }
-  $('noBtn').addEventListener('click',()=>{tone(250,.18,'sawtooth',.027);$('twist').classList.add('show');$('noBtn').style.opacity='.65'});
-  $('retryBtn').addEventListener('click',()=>{$('twist').classList.remove('show');$('noBtn').style.opacity='1';clickSound()});
+  $('noBtn').addEventListener('click',()=>{
+    tone(220,.24,'sawtooth',.045);
+    tone(130,.30,'square',.024,.12);
+    show('error');
+  });
+  $('retryBtn').addEventListener('click',()=>{clickSound();show('decision');});
   $('yesBtn').addEventListener('click',()=>{
     successSound();
-    $('twist').classList.remove('show');
     show('launch');
     startLaunch();
   });
@@ -591,7 +619,6 @@
     if(loadingRAF!==null){cancelAnimationFrame(loadingRAF);loadingRAF=null;}
     if(ctx)ctx.clearRect(0,0,canvas.width,canvas.height);
     isSigned=false;inkDistance=0;
-    $('twist').classList.remove('show');$('noBtn').style.opacity='1';
     $('signHint').textContent='';clickSound();show('intro');
   }
   // Untuk rehearsal sahaja: tekan R semasa skrin loading untuk ulang dari awal.
